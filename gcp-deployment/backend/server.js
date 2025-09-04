@@ -15,92 +15,216 @@ const mockUser = {
   role: 'admin'
 };
 
-// Permit type configurations with specific checklists
+// Permit type configurations with standardized Charlotte County checklists
 const permitTypeConfigs = {
   'mobile-home': {
     name: 'Mobile Home',
+    description: 'Installation of a new or replacement mobile/manufactured home. Must be HUD Wind Zone 3 compliant.',
     checklist: [
-      'Site plan approval',
-      'Foundation inspection',
-      'Electrical hookup verification',
-      'Plumbing connections check',
-      'Tie-down system inspection',
-      'Final occupancy inspection'
+      'Application Package for Mobile/Manufactured Home Permit',
+      'Notice of Commencement (if contract > $5,000)',
+      'HUD Wind Zone 3 compliance letter from manufacturer',
+      'Foundation and stairs plans (signed/sealed)',
+      'Drainage/Site Plan with setbacks and elevations',
+      'Survey (signed/sealed)',
+      'Drainage Survey (As Built) - post-construction elevations',
+      'Tree Permit Application (if removing trees)',
+      'No Public Utility Structures On-Site Affidavit',
+      'Fire Hydrant Accessibility/Location Affidavit',
+      'Public Sewer, Private Septic & Water Service Affidavit',
+      'Subcontractor Worksheet (if applicable)',
+      'CCU or FDOH approval letter',
+      'Elevation Certificate (Final) - if in SFHA',
+      'No Impact Certification (if in floodway)',
+      'Intake/Sufficiency Review',
+      'Building Code Compliance Review',
+      'Natural Resources Review (protected species)',
+      'Right-of-Way Review',
+      'Tree Review (heritage trees)',
+      'Utilities Review (CCU connection)',
+      'Zoning Review (setbacks, land development)',
+      'Foundation Installation Inspection',
+      'Tie-down System Inspection',
+      'Electrical Hookup Inspection',
+      'Plumbing Connections Inspection',
+      'Final Building Inspection'
     ]
   },
   'modular-home': {
     name: 'Modular Home',
+    description: 'Installation of a new or replacement modular home. Must be Florida DBPR compliant.',
     checklist: [
-      'Foundation permit',
-      'Modular unit delivery approval',
-      'Electrical rough-in inspection',
-      'Plumbing rough-in inspection',
-      'HVAC installation check',
-      'Final building inspection',
-      'Certificate of occupancy'
+      'Application for Construction Permit',
+      'Tree Permit Application Package',
+      'Notice of Commencement (if contract > $5,000)',
+      'Florida DBPR approval proof',
+      'Foundation drawings/plans (signed/sealed)',
+      'Elevation Certificate (Final) - if in SFHA',
+      'Drainage/Site Plan with setbacks and elevations',
+      'Survey (signed/sealed)',
+      'Drainage Survey (As Built) - post-construction elevations',
+      'Tree Permit Application (if removing trees)',
+      'CCU or FDOH approval letter',
+      'No Public Utility Structures On-Site Affidavit',
+      'Fire Hydrant Accessibility/Location Affidavit',
+      'Public Sewer, Private Septic & Water Service Affidavit',
+      'Subcontractor Worksheet (if applicable)',
+      'Owner-Builder Disclosure (if applicable)',
+      'Intake/Sufficiency Review',
+      'Addressing Review',
+      'Building Code Compliance Review',
+      'FDOH Review (if applicable)',
+      'Natural Resources Review (protected species)',
+      'Overlay Districts Review (if applicable)',
+      'Right-of-Way Review',
+      'Tree Review (heritage trees)',
+      'Utilities Review (CCU connection)',
+      'Zoning Review (setbacks, land development)',
+      'Foundation Installation Inspection',
+      'Modular Unit Delivery Inspection',
+      'Electrical Rough-in Inspection',
+      'Plumbing Rough-in Inspection',
+      'HVAC Installation Inspection',
+      'Final Building Inspection',
+      'Certificate of Occupancy'
     ]
   },
   'shed': {
     name: 'Shed Permit',
+    description: 'Construction of accessory storage structures.',
     checklist: [
-      'Setback requirements verification',
-      'Foundation/slab inspection',
-      'Structural framing check',
-      'Roofing inspection',
-      'Final inspection'
+      'Building Permit Application',
+      'Site Plan with setbacks',
+      'Foundation/Slab Plans',
+      'Structural Plans (if required)',
+      'Zoning Review (setbacks, lot coverage)',
+      'Building Code Review',
+      'Foundation/Slab Inspection',
+      'Structural Framing Inspection',
+      'Roofing Inspection',
+      'Final Inspection'
     ]
   },
   'addition': {
     name: 'Home Addition',
+    description: 'Construction of additions to existing residential structures.',
     checklist: [
-      'Building permit application',
-      'Structural plans review',
-      'Foundation inspection',
-      'Framing inspection',
-      'Electrical rough-in',
-      'Plumbing rough-in',
-      'Insulation inspection',
-      'Drywall inspection',
-      'Final inspection'
+      'Building Permit Application',
+      'Architectural Plans (signed/sealed)',
+      'Structural Plans (signed/sealed)',
+      'Site Plan with setbacks',
+      'Survey (if required)',
+      'Zoning Review (setbacks, lot coverage)',
+      'Building Code Review',
+      'Foundation Inspection',
+      'Framing Inspection',
+      'Electrical Rough-in Inspection',
+      'Plumbing Rough-in Inspection',
+      'Insulation Inspection',
+      'Drywall Inspection',
+      'Final Inspection'
     ]
   },
   'hvac': {
     name: 'HVAC Permit',
+    description: 'Installation or replacement of heating, ventilation, and air conditioning systems.',
     checklist: [
-      'HVAC system design review',
-      'Ductwork installation inspection',
-      'Equipment mounting verification',
-      'Electrical connections check',
-      'Gas line connections (if applicable)',
-      'System startup and testing',
-      'Final inspection and approval'
+      'HVAC Permit Application',
+      'HVAC System Design Plans',
+      'Equipment Specifications',
+      'Ductwork Design Plans',
+      'Electrical Load Calculations',
+      'Gas Line Plans (if applicable)',
+      'Building Code Review',
+      'Electrical Review',
+      'Gas Line Review (if applicable)',
+      'Ductwork Installation Inspection',
+      'Equipment Mounting Inspection',
+      'Electrical Connections Inspection',
+      'Gas Line Connections Inspection (if applicable)',
+      'System Startup and Testing',
+      'Final HVAC Inspection'
     ]
   },
   'electrical': {
     name: 'Electrical Permit',
+    description: 'Installation or modification of electrical systems.',
     checklist: [
-      'Electrical plans review',
-      'Rough-in electrical inspection',
-      'Panel installation verification',
-      'Outlet and switch installation',
-      'GFCI and AFCI compliance check',
-      'Final electrical inspection',
-      'Certificate of completion'
+      'Electrical Permit Application',
+      'Electrical Plans (signed/sealed)',
+      'Load Calculations',
+      'Panel Schedule',
+      'GFCI/AFCI Requirements Review',
+      'Building Code Review',
+      'Electrical Code Review',
+      'Rough-in Electrical Inspection',
+      'Panel Installation Inspection',
+      'Outlet and Switch Installation Inspection',
+      'GFCI and AFCI Compliance Inspection',
+      'Final Electrical Inspection',
+      'Certificate of Completion'
     ]
   },
   'plumbing': {
     name: 'Plumbing Permit',
+    description: 'Installation or modification of plumbing systems.',
     checklist: [
-      'Plumbing plans review',
-      'Rough-in plumbing inspection',
-      'Water line installation',
-      'Drain line installation',
-      'Fixture installation verification',
-      'Pressure testing',
-      'Final plumbing inspection'
+      'Plumbing Permit Application',
+      'Plumbing Plans (signed/sealed)',
+      'Fixture Specifications',
+      'Water Line Plans',
+      'Drain Line Plans',
+      'Building Code Review',
+      'Plumbing Code Review',
+      'Rough-in Plumbing Inspection',
+      'Water Line Installation Inspection',
+      'Drain Line Installation Inspection',
+      'Fixture Installation Inspection',
+      'Pressure Testing',
+      'Final Plumbing Inspection'
     ]
   }
 };
+
+// Contractors database
+let contractors = [
+  {
+    id: '1',
+    name: 'ABC Construction LLC',
+    license: 'CBC1234567',
+    phone: '(305) 555-0456',
+    email: 'contact@abcconstruction.com',
+    specialties: 'General Construction, Renovations',
+    status: 'active'
+  },
+  {
+    id: '2',
+    name: 'XYZ Builders Inc',
+    license: 'CBC7654321',
+    phone: '(407) 555-0321',
+    email: 'info@xyzbuilders.com',
+    specialties: 'Residential Construction, Additions',
+    status: 'active'
+  },
+  {
+    id: '3',
+    name: 'Elite Electrical Services',
+    license: 'EC123456',
+    phone: '(305) 555-0101',
+    email: 'info@eliteelectrical.com',
+    specialties: 'Electrical, HVAC',
+    status: 'active'
+  },
+  {
+    id: '4',
+    name: 'Premier Plumbing Co',
+    license: 'PC789012',
+    phone: '(305) 555-0202',
+    email: 'info@premierplumbing.com',
+    specialties: 'Plumbing, Water Systems',
+    status: 'active'
+  }
+];
 
 const mockPackages = [
   {
@@ -493,6 +617,134 @@ app.post('/api/permits/:id/documents', authenticateToken, async (req, res) => {
 });
 
 // Health check
+// Admin API endpoints for contractor management
+app.get('/api/admin/contractors', authenticateToken, (req, res) => {
+  // Check if user is admin
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  res.json(contractors);
+});
+
+app.post('/api/admin/contractors', authenticateToken, (req, res) => {
+  // Check if user is admin
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  
+  const { name, license, phone, email, specialties, status } = req.body;
+  const newContractor = {
+    id: Date.now().toString(),
+    name,
+    license,
+    phone,
+    email,
+    specialties,
+    status: status || 'active'
+  };
+  
+  contractors.push(newContractor);
+  res.status(201).json(newContractor);
+});
+
+app.put('/api/admin/contractors/:id', authenticateToken, (req, res) => {
+  // Check if user is admin
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  
+  const { id } = req.params;
+  const contractorIndex = contractors.findIndex(c => c.id === id);
+  
+  if (contractorIndex === -1) {
+    return res.status(404).json({ error: 'Contractor not found' });
+  }
+  
+  contractors[contractorIndex] = { ...contractors[contractorIndex], ...req.body };
+  res.json(contractors[contractorIndex]);
+});
+
+app.delete('/api/admin/contractors/:id', authenticateToken, (req, res) => {
+  // Check if user is admin
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  
+  const { id } = req.params;
+  const contractorIndex = contractors.findIndex(c => c.id === id);
+  
+  if (contractorIndex === -1) {
+    return res.status(404).json({ error: 'Contractor not found' });
+  }
+  
+  contractors.splice(contractorIndex, 1);
+  res.json({ message: 'Contractor deleted successfully' });
+});
+
+// Admin API endpoints for permit type management
+app.get('/api/admin/permit-types', authenticateToken, (req, res) => {
+  // Check if user is admin
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  res.json(permitTypeConfigs);
+});
+
+app.put('/api/admin/permit-types/:type', authenticateToken, (req, res) => {
+  // Check if user is admin
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  
+  const { type } = req.params;
+  const { checklist } = req.body;
+  
+  if (!permitTypeConfigs[type]) {
+    return res.status(404).json({ error: 'Permit type not found' });
+  }
+  
+  permitTypeConfigs[type].checklist = checklist;
+  res.json(permitTypeConfigs[type]);
+});
+
+app.post('/api/admin/permit-types/:type/checklist', authenticateToken, (req, res) => {
+  // Check if user is admin
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  
+  const { type } = req.params;
+  const { item } = req.body;
+  
+  if (!permitTypeConfigs[type]) {
+    return res.status(404).json({ error: 'Permit type not found' });
+  }
+  
+  permitTypeConfigs[type].checklist.push(item);
+  res.json(permitTypeConfigs[type]);
+});
+
+app.delete('/api/admin/permit-types/:type/checklist/:index', authenticateToken, (req, res) => {
+  // Check if user is admin
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  
+  const { type, index } = req.params;
+  const itemIndex = parseInt(index);
+  
+  if (!permitTypeConfigs[type]) {
+    return res.status(404).json({ error: 'Permit type not found' });
+  }
+  
+  if (itemIndex < 0 || itemIndex >= permitTypeConfigs[type].checklist.length) {
+    return res.status(404).json({ error: 'Checklist item not found' });
+  }
+  
+  permitTypeConfigs[type].checklist.splice(itemIndex, 1);
+  res.json(permitTypeConfigs[type]);
+});
+
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
