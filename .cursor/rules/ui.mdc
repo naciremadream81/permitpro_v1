@@ -1,0 +1,89 @@
+---
+alwaysApply: true
+---
+ui:
+  # Existing UI functions (kept for compatibility)
+  show:
+    description: Show the UI for permit package management.
+    steps:
+      - render: mainWindow
+      - load: permitPackages
+      - display: permitPackageList
+
+  hide:
+    description: Hide the UI for permit package management.
+    steps:
+      - close: mainWindow
+
+  # Improvements and new features for permit package management
+
+  addPermitPackage:
+    description: Add a new permit package via the UI.
+    steps:
+      - open: addPermitPackageDialog
+      - input: packageDetails
+      - validate: packageDetails
+      - save: newPermitPackage
+      - refresh: permitPackageList
+
+  editPermitPackage:
+    description: Edit an existing permit package.
+    steps:
+      - select: permitPackage
+      - open: editPermitPackageDialog
+      - input: updatedDetails
+      - validate: updatedDetails
+      - save: updatedPermitPackage
+      - refresh: permitPackageList
+
+  deletePermitPackage:
+    description: Delete a permit package with confirmation.
+    steps:
+      - select: permitPackage
+      - confirm: deleteAction
+      - remove: permitPackage
+      - refresh: permitPackageList
+
+  searchPermitPackages:
+    description: Search for permit packages by name, type, or status.
+    steps:
+      - input: searchQuery
+      - filter: permitPackageList
+      - display: filteredResults
+
+  viewPermitPackageDetails:
+    description: View detailed information about a permit package.
+    steps:
+      - select: permitPackage
+      - open: permitPackageDetailsDialog
+
+  importPermitPackages:
+    description: Import permit packages from a file (CSV, JSON).
+    steps:
+      - open: importDialog
+      - select: importFile
+      - validate: importFile
+      - import: permitPackages
+      - refresh: permitPackageList
+
+  exportPermitPackages:
+    description: Export permit packages to a file (CSV, JSON).
+    steps:
+      - open: exportDialog
+      - select: exportFormat
+      - export: permitPackages
+
+  bulkUpdatePermitPackages:
+    description: Bulk update status or attributes of selected permit packages.
+    steps:
+      - select: multiplePermitPackages
+      - open: bulkUpdateDialog
+      - input: updateAttributes
+      - apply: updates
+      - refresh: permitPackageList
+
+  notifications:
+    description: Show notifications for permit package actions (add, edit, delete, import, export).
+    steps:
+      - onAction: [add, edit, delete, import, export]
+      - display: notificationMessage

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PermitPro - Professional Permit Management</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .status {
+            background: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .api-test {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        button:hover {
+            background: #5a6fd8;
+        }
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .login-form {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .form-group {
+            margin: 1rem 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .permit-types {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+        .permit-type {
+            background: white;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 3px;
+            border-left: 4px solid #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 PermitPro GCP Deployment</h1>
+        <div class="status">
+            ✅ Frontend Successfully Deployed to Firebase Hosting<br>
+            ✅ Backend Successfully Deployed to Google App Engine
+        </div>
+        
+        <div class="api-test">
+            <h3>Backend API Test</h3>
+            <p>Test the Google App Engine backend API:</p>
+            <button onclick="testHealth()">Test Health Check</button>
+            <button onclick="testPermitTypes()">Test Permit Types</button>
+            <button onclick="testLogin()">Test Login</button>
+            <div id="result" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="login-form">
+            <h3>Demo Login</h3>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" value="demo@permitpro.com" readonly>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" value="demo123" readonly>
+            </div>
+            <button onclick="performLogin()">Login</button>
+            <div id="loginResult" class="result" style="display: none;"></div>
+        </div>
+
+        <div class="permit-types">
+            <h3>Available Permit Types</h3>
+            <div id="permitTypesList"></div>
+        </div>
+
+        <div class="api-test">
+            <h3>API Endpoints</h3>
+            <p><strong>Backend:</strong> <a href="https://permitpro-463203.uk.r.appspot.com/health" target="_blank">https://permitpro-463203.uk.r.appspot.com/</a></p>
+            <p><strong>Frontend:</strong> <a href="https://permitpro-463203.web.app" target="_blank">https://permitpro-463203.web.app</a></p>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script>
+        let authToken = null;
+        
+        function showResult(message, isSuccess = true, elementId = 'result') {
+            const result = document.getElementById(elementId);
+            result.style.display = 'block';
+            result.className = `result ${isSuccess ? 'success' : 'error'}`;
+            result.textContent = message;
+        }
+
+        async function testHealth() {
+            try {
+                const response = await fetch('https://permitpro-463203.uk.r.appspot.com/health');
+                const data = await response.json();
+                showResult(`Health Check: ${JSON.stringify(data, null, 2)}`);
+            } catch (error) {
+                showResult(`Health Check Error: ${error.message}`, false);
+            }
+        }
+
+        async function testPermitTypes() {
+            try {
+                const data = await window.apiService.getPermitTypes();
+                showResult(`Permit Types: ${JSON.stringify(data, null, 2)}`);
+                displayPermitTypes(data);
+            } catch (error) {
+                showResult(`Permit Types Error: ${error.message}`, false);
+            }
+        }
+
+        async function testLogin() {
+            try {
+                const data = await window.apiService.login('demo@permitpro.com', 'demo123');
+                showResult(`Login Test: ${JSON.stringify(data, null, 2)}`);
+            } catch (error) {
+                showResult(`Login Test Error: ${error.message}`, false);
+            }
+        }
+
+        async function performLogin() {
+            try {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                const data = await window.apiService.login(email, password);
+                authToken = data.token;
+                showResult(`Login Successful! Welcome ${data.user.name}`, true, 'loginResult');
+            } catch (error) {
+                showResult(`Login Error: ${error.message}`, false, 'loginResult');
+            }
+        }
+
+        function displayPermitTypes(types) {
+            const container = document.getElementById('permitTypesList');
+            container.innerHTML = types.map(type => 
+                `<div class="permit-type">
+                    <strong>${type.label}</strong> (${type.value})
+                </div>`
+            ).join('');
+        }
+
+        // Load permit types on page load
+        window.addEventListener('load', () => {
+            testPermitTypes();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+---
+description: |
+  After every coding session or any change in the codebase, ensure the project directory is cleaned up to remove clutter. Do not delete files or artifacts that might be useful later; instead, move any extra or unnecessary files into an "extra_stuff" folder for safekeeping and future reference.
+globs:
+alwaysApply: true
+---

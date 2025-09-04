@@ -1,0 +1,12 @@
+updateReadmeOnChange:
+  description: Whenever any changes are made to the project, ensure that the README.md file is updated in detail to reflect those changes. This includes documenting new features, modifications, bug fixes, and any relevant usage or deployment instructions.
+  steps:
+    - detect: projectChange
+    - review: changes
+    - update: README.md
+    - ensure: detailedDocumentation
+    - commit: updatedREADME
+description:
+globs:
+alwaysApply: true
+---

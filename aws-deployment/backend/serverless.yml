@@ -1,0 +1,233 @@
+service: permitpro-backend
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  
+  environment:
+    NODE_ENV: ${self:provider.stage}
+    DATABASE_URL: ${env:DATABASE_URL}
+    DB_HOST: ${env:DB_HOST}
+    DB_NAME: ${env:DB_NAME}
+    DB_USER: ${env:DB_USER}
+    DB_PASSWORD: ${env:DB_PASSWORD}
+    JWT_SECRET: ${env:JWT_SECRET}
+    JWT_EXPIRES_IN: ${env:JWT_EXPIRES_IN, '7d'}
+    S3_BUCKET: ${env:S3_BUCKET}
+    COGNITO_USER_POOL_ID: ${env:COGNITO_USER_POOL_ID}
+    COGNITO_USER_POOL_CLIENT_ID: ${env:COGNITO_USER_POOL_CLIENT_ID}
+    PORT: 3001
+  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:GetObject
+            - s3:PutObject
+            - s3:DeleteObject
+          Resource: "arn:aws:s3:::${env:S3_BUCKET}/*"
+        - Effect: Allow
+          Action:
+            - rds:*
+          Resource: "*"
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+functions:
+  # Authentication
+  auth:
+    handler: handler.auth
+    events:
+      - http:
+          path: /auth/{proxy+}
+          method: ANY
+          cors: true
+
+  # Packages API
+  packages:
+    handler: handler.packages
+    events:
+      - http:
+          path: /packages/{proxy+}
+          method: ANY
+          cors: true
+
+  # Contractors API
+  contractors:
+    handler: handler.contractors
+    events:
+      - http:
+          path: /contractors/{proxy+}
+          method: ANY
+          cors: true
+
+  # Permit Types API
+  permitTypes:
+    handler: handler.permitTypes
+    events:
+      - http:
+          path: /permit-types
+          method: GET
+          cors: true
+
+  # Checklist API
+  checklist:
+    handler: handler.checklist
+    events:
+      - http:
+          path: /checklist
+          method: GET
+          cors: true
+
+  # Dashboard API
+  dashboard:
+    handler: handler.dashboard
+    events:
+      - http:
+          path: /dashboard/{proxy+}
+          method: ANY
+          cors: true
+
+  # File Upload
+  upload:
+    handler: handler.upload
+    events:
+      - http:
+          path: /upload
+          method: POST
+          cors: true
+
+resources:
+  Resources:
+    # S3 Bucket for file storage
+    PermitProBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${env:S3_BUCKET}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders: ['*']
+              AllowedMethods: [GET, PUT, POST, DELETE]
+              AllowedOrigins: ['*']
+              MaxAge: 3000
+
+    # RDS PostgreSQL Database
+    PermitProDB:
+      Type: AWS::RDS::DBInstance
+      Properties:
+        DBInstanceIdentifier: permitpro-db-${self:provider.stage}
+        DBName: permitpro
+        DBInstanceClass: db.t3.micro
+        Engine: postgres
+        EngineVersion: '15.4'
+        MasterUsername: ${env:DB_USER}
+        MasterUserPassword: ${env:DB_PASSWORD}
+        AllocatedStorage: 20
+        StorageType: gp2
+        VPCSecurityGroups:
+          - Ref: PermitProDBSecurityGroup
+        DBSubnetGroupName: !Ref PermitProDBSubnetGroup
+        BackupRetentionPeriod: 7
+        MultiAZ: false
+        PubliclyAccessible: false
+        StorageEncrypted: true
+
+    # Security Group for RDS
+    PermitProDBSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: Security group for PermitPro RDS
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: 5432
+            ToPort: 5432
+            SourceSecurityGroupId: !Ref PermitProLambdaSecurityGroup
+
+    # Security Group for Lambda
+    PermitProLambdaSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: Security group for PermitPro Lambda
+
+    # DB Subnet Group
+    PermitProDBSubnetGroup:
+      Type: AWS::RDS::DBSubnetGroup
+      Properties:
+        DBSubnetGroupDescription: Subnet group for PermitPro RDS
+        SubnetIds:
+          - !Ref PermitProSubnet1
+          - !Ref PermitProSubnet2
+
+    # VPC
+    PermitProVPC:
+      Type: AWS::EC2::VPC
+      Properties:
+        CidrBlock: 10.0.0.0/16
+        EnableDnsHostnames: true
+        EnableDnsSupport: true
+
+    # Subnets
+    PermitProSubnet1:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId: !Ref PermitProVPC
+        CidrBlock: 10.0.1.0/24
+        AvailabilityZone: ${self:provider.region}a
+
+    PermitProSubnet2:
+      Type: AWS::EC2::Subnet
+      Properties:
+        VpcId: !Ref PermitProVPC
+        CidrBlock: 10.0.2.0/24
+        AvailabilityZone: ${self:provider.region}b
+
+    # Internet Gateway
+    PermitProInternetGateway:
+      Type: AWS::EC2::InternetGateway
+
+    PermitProInternetGatewayAttachment:
+      Type: AWS::EC2::VPCGatewayAttachment
+      Properties:
+        InternetGatewayId: !Ref PermitProInternetGateway
+        VpcId: !Ref PermitProVPC
+
+  Outputs:
+    ApiGatewayRestApiId:
+      Value:
+        Ref: ApiGatewayRestApi
+      Export:
+        Name: ${self:service}-${self:provider.stage}-restApiId
+
+    ApiGatewayRestApiRootResourceId:
+      Value:
+        Fn::GetAtt:
+          - ApiGatewayRestApi
+          - RootResourceId
+      Export:
+        Name: ${self:service}-${self:provider.stage}-rootResourceId
+
+    S3BucketName:
+      Value:
+        Ref: PermitProBucket
+      Export:
+        Name: ${self:service}-${self:provider.stage}-bucketName
+
+    DatabaseEndpoint:
+      Value:
+        Fn::GetAtt:
+          - PermitProDB
+          - Endpoint.Address
+      Export:
+        Name: ${self:service}-${self:provider.stage}-dbEndpoint

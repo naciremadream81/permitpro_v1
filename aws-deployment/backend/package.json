@@ -1,0 +1,39 @@
+{
+  "name": "permitpro-aws-backend",
+  "version": "1.0.0",
+  "description": "PermitPro AWS Lambda Backend",
+  "main": "handler.js",
+  "scripts": {
+    "deploy": "serverless deploy",
+    "deploy:dev": "serverless deploy --stage dev",
+    "deploy:prod": "serverless deploy --stage prod",
+    "remove": "serverless remove",
+    "offline": "serverless offline",
+    "logs": "serverless logs -f",
+    "test": "jest"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1490.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.11.3",
+    "serverless-http": "^4.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "serverless": "^3.38.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-offline": "^13.3.0"
+  },
+  "keywords": [
+    "serverless",
+    "aws",
+    "lambda",
+    "permit",
+    "management"
+  ],
+  "author": "PermitPro Team",
+  "license": "MIT"
+}

@@ -1,0 +1,115 @@
+[vite] connecting... client:229:9
+[vite] connected. client:325:21
+XHRGET
+http://localhost:3001/api/packages
+[HTTP/1.1 403 Forbidden 1ms]
+
+XHRGET
+http://localhost:3001/api/dashboard/stats
+[HTTP/1.1 404 Not Found 1ms]
+
+XHRGET
+http://localhost:3001/api/packages
+[HTTP/1.1 403 Forbidden 1ms]
+
+XHRGET
+http://localhost:3001/api/dashboard/stats
+[HTTP/1.1 404 Not Found 1ms]
+
+API request failed: Error: HTTP error! status: 403
+    request api.ts:55
+    getPackages api.ts:99
+    loadData App.tsx:44
+    App App.tsx:31
+    React 8
+    workLoop scheduler.development.js:266
+    flushWork scheduler.development.js:239
+    performWorkUntilDeadline scheduler.development.js:533
+    js scheduler.development.js:571
+    js scheduler.development.js:633
+    __require chunk-5WWUZCGV.js:8
+    js index.js:6
+    __require chunk-5WWUZCGV.js:8
+    React 2
+    __require chunk-5WWUZCGV.js:8
+    js React
+    __require chunk-5WWUZCGV.js:8
+    js React
+    __require chunk-5WWUZCGV.js:8
+    <anonymous> react-dom_client.js:38
+<anonymous code>:1:147461
+Backend not available, using demo data <anonymous code>:1:147461
+API request failed: Error: HTTP error! status: 404
+    request api.ts:55
+    getDashboardStats api.ts:226
+    loadData App.tsx:45
+    App App.tsx:31
+    React 8
+    workLoop scheduler.development.js:266
+    flushWork scheduler.development.js:239
+    performWorkUntilDeadline scheduler.development.js:533
+    js scheduler.development.js:571
+    js scheduler.development.js:633
+    __require chunk-5WWUZCGV.js:8
+    js index.js:6
+    __require chunk-5WWUZCGV.js:8
+    React 2
+    __require chunk-5WWUZCGV.js:8
+    js React
+    __require chunk-5WWUZCGV.js:8
+    js React
+    __require chunk-5WWUZCGV.js:8
+    <anonymous> react-dom_client.js:38
+<anonymous code>:1:147461
+Backend not available, using demo dashboard stats <anonymous code>:1:147461
+API request failed: Error: HTTP error! status: 403
+    request api.ts:55
+    getPackages api.ts:99
+    loadData App.tsx:44
+    App App.tsx:31
+    React 7
+    workLoop scheduler.development.js:266
+    flushWork scheduler.development.js:239
+    performWorkUntilDeadline scheduler.development.js:533
+    js scheduler.development.js:571
+    js scheduler.development.js:633
+    __require chunk-5WWUZCGV.js:8
+    js index.js:6
+    __require chunk-5WWUZCGV.js:8
+    React 2
+    __require chunk-5WWUZCGV.js:8
+    js React
+    __require chunk-5WWUZCGV.js:8
+    js React
+    __require chunk-5WWUZCGV.js:8
+    <anonymous> react-dom_client.js:38
+<anonymous code>:1:147461
+Backend not available, using demo data <anonymous code>:1:147461
+API request failed: Error: HTTP error! status: 404
+    request api.ts:55
+    getDashboardStats api.ts:226
+    loadData App.tsx:45
+    App App.tsx:31
+    React 7
+    workLoop scheduler.development.js:266
+    flushWork scheduler.development.js:239
+    performWorkUntilDeadline scheduler.development.js:533
+    js scheduler.development.js:571
+    js scheduler.development.js:633
+    __require chunk-5WWUZCGV.js:8
+    js index.js:6
+    __require chunk-5WWUZCGV.js:8
+    React 2
+    __require chunk-5WWUZCGV.js:8
+    js React
+    __require chunk-5WWUZCGV.js:8
+    js React
+    __require chunk-5WWUZCGV.js:8
+    <anonymous> react-dom_client.js:38
+<anonymous code>:1:147461
+Backend not available, using demo dashboard stats <anonymous code>:1:147461
+Source map error: Error: request failed with status 404
+Stack in the worker:networkRequest@resource://devtools/client/shared/source-map-loader/utils/network-request.js:43:9
+
+Resource URL: http://localhost:3000/%3Canonymous%20code%3E
+Source Map URL: installHook.js.map

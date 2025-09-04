@@ -1,0 +1,26 @@
+runtime: nodejs20
+
+env_variables:
+  NODE_ENV: production
+  DATABASE_URL: "postgresql://permitpro_user:your-secure-password@/permitpro?host=/cloudsql/permitpro-463203:us-central1:permitpro-db"
+  DB_HOST: /cloudsql/permitpro-463203:us-central1:permitpro-db
+  DB_NAME: permitpro
+  DB_USER: permitpro_user
+  DB_PASSWORD: your-secure-password
+  JWT_SECRET: your-super-secret-jwt-key
+  JWT_EXPIRES_IN: "7d"
+  STORAGE_BUCKET: permitpro-files-permitpro-463203
+
+
+beta_settings:
+  cloud_sql_instances: permitpro-463203:us-central1:permitpro-db
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 10
+  target_cpu_utilization: 0.6
+
+handlers:
+  - url: /.*
+    script: auto
+    secure: always

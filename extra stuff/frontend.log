@@ -1,0 +1,1244 @@
+
+> permitpro-nextjs@1.0.0 dev
+> npx next dev
+
+   ▲ Next.js 15.5.2
+   - Local:        http://localhost:3000
+   - Network:      http://10.0.8.54:3000
+   - Environments: .env
+
+ ✓ Starting...
+Warning: Reverting webpack devtool to 'false'.
+Changing the webpack devtool in development mode will cause severe performance regressions.
+Read more: https://nextjs.org/docs/messages/improper-devtool
+ ✓ Ready in 2.6s
+ ○ Compiling / ...
+ ✓ Compiled / in 2.7s (577 modules)
+ GET / 200 in 3545ms
+ ✓ Compiled in 268ms (248 modules)
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1927ms (568 modules)
+ GET /installHook.js.map 404 in 2310ms
+ GET / 200 in 146ms
+ GET / 200 in 100ms
+ GET / 200 in 92ms
+ GET / 200 in 99ms
+ GET / 200 in 87ms
+ ✓ Compiled in 960ms (537 modules)
+ GET / 200 in 284ms
+ GET / 200 in 257ms
+ GET / 200 in 96ms
+ ✓ Compiled in 710ms (577 modules)
+ GET / 200 in 295ms
+ ✓ Compiled in 1028ms (577 modules)
+ GET / 200 in 268ms
+ ✓ Compiled in 1740ms (577 modules)
+ GET / 200 in 254ms
+ ⨯ ./components/PackageDetailView.js
+Error:   [31mx[0m await isn't allowed in non-async function
+    ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:80:1]
+ [2m77[0m |         packageId: packageData.id
+ [2m78[0m |       };
+ [2m79[0m |       
+ [2m80[0m |       await apiService.uploadDocument(packageData.id, documentData);
+    : [35;1m      ^^^^^[0m
+ [2m81[0m |       
+ [2m82[0m |       const updatedPackage = {
+ [2m83[0m |         ...packageData,
+    `----
+  [31mx[0m Return statement is not allowed here
+     ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:106:1]
+ [2m103[0m |         return variants[status] || 'default';
+ [2m104[0m |       };
+ [2m105[0m |     
+ [2m106[0m | [35;1m,[0m[35;1m-[0m[35;1m>[0m   return (
+ [2m107[0m | [35;1m|[0m       <div className="min-h-screen bg-gray-50">
+ [2m108[0m | [35;1m|[0m         {/* Header */}
+ [2m109[0m | [35;1m|[0m         <header className="bg-white shadow-sm border-b">
+ [2m110[0m | [35;1m|[0m           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ [2m111[0m | [35;1m|[0m             <div className="flex items-center h-16">
+ [2m112[0m | [35;1m|[0m               <Button variant="outline" onClick={onBack} className="mr-4">
+ [2m113[0m | [35;1m|[0m                 <ArrowLeft className="h-4 w-4 mr-2" />
+ [2m114[0m | [35;1m|[0m                 Back to Dashboard
+ [2m115[0m | [35;1m|[0m               </Button>
+ [2m116[0m | [35;1m|[0m               <h1 className="text-2xl font-bold text-gray-900">Package Details</h1>
+ [2m117[0m | [35;1m|[0m             </div>
+ [2m118[0m | [35;1m|[0m           </div>
+ [2m119[0m | [35;1m|[0m         </header>
+ [2m120[0m | [35;1m|[0m   
+ [2m121[0m | [35;1m|[0m         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+ [2m122[0m | [35;1m|[0m           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+ [2m123[0m | [35;1m|[0m             {/* Main Content */}
+ [2m124[0m | [35;1m|[0m             <div className="lg:col-span-2 space-y-6">
+ [2m125[0m | [35;1m|[0m               {/* Package Information */}
+ [2m126[0m | [35;1m|[0m               <Card>
+ [2m127[0m | [35;1m|[0m                 <CardHeader>
+ [2m128[0m | [35;1m|[0m                   <div className="flex justify-between items-center">
+ [2m129[0m | [35;1m|[0m                     <h2 className="text-lg font-semibold text-gray-900">Package Information</h2>
+ [2m130[0m | [35;1m|[0m                     <Badge variant={getStatusVariant(packageData.status)}>
+ [2m131[0m | [35;1m|[0m                       {packageData.status}
+ [2m132[0m | [35;1m|[0m                     </Badge>
+ [2m133[0m | [35;1m|[0m                   </div>
+ [2m134[0m | [35;1m|[0m                 </CardHeader>
+ [2m135[0m | [35;1m|[0m                 <CardContent>
+ [2m136[0m | [35;1m|[0m                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+ [2m137[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m138[0m | [35;1m|[0m                       <User className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m139[0m | [35;1m|[0m                       <div>
+ [2m140[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Customer Name</p>
+ [2m141[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.customerName}</p>
+ [2m142[0m | [35;1m|[0m                       </div>
+ [2m143[0m | [35;1m|[0m                     </div>
+ [2m144[0m | [35;1m|[0m                     
+ [2m145[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m146[0m | [35;1m|[0m                       <MapPin className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m147[0m | [35;1m|[0m                       <div>
+ [2m148[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Property Address</p>
+ [2m149[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.propertyAddress}</p>
+ [2m150[0m | [35;1m|[0m                       </div>
+ [2m151[0m | [35;1m|[0m                     </div>
+ [2m152[0m | [35;1m|[0m                     
+ [2m153[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m154[0m | [35;1m|[0m                       <div className="h-5 w-5 bg-primary-100 rounded mt-0.5 flex items-center justify-center">
+ [2m155[0m | [35;1m|[0m                         <div className="h-2 w-2 bg-primary-600 rounded"></div>
+ [2m156[0m | [35;1m|[0m                       </div>
+ [2m157[0m | [35;1m|[0m                       <div>
+ [2m158[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">County</p>
+ [2m159[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.county}</p>
+ [2m160[0m | [35;1m|[0m                       </div>
+ [2m161[0m | [35;1m|[0m                     </div>
+ [2m162[0m | [35;1m|[0m                     
+ [2m163[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m164[0m | [35;1m|[0m                       <Calendar className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m165[0m | [35;1m|[0m                       <div>
+ [2m166[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Created Date</p>
+ [2m167[0m | [35;1m|[0m                         <p className="text-base text-gray-900">
+ [2m168[0m | [35;1m|[0m                           {new Date(packageData.createdAt).toLocaleDateString()}
+ [2m169[0m | [35;1m|[0m                         </p>
+ [2m170[0m | [35;1m|[0m                       </div>
+ [2m171[0m | [35;1m|[0m                     </div>
+ [2m172[0m | [35;1m|[0m                   </div>
+ [2m173[0m | [35;1m|[0m                 </CardContent>
+ [2m174[0m | [35;1m|[0m               </Card>
+ [2m175[0m | [35;1m|[0m   
+ [2m176[0m | [35;1m|[0m               {/* Documents */}
+ [2m177[0m | [35;1m|[0m               <Card>
+ [2m178[0m | [35;1m|[0m                 <CardHeader>
+ [2m179[0m | [35;1m|[0m                   <div className="flex justify-between items-center">
+ [2m180[0m | [35;1m|[0m                     <h2 className="text-lg font-semibold text-gray-900">Documents</h2>
+ [2m181[0m | [35;1m|[0m                     <Button onClick={() => setShowUploadModal(true)}>
+ [2m182[0m | [35;1m|[0m                       <Upload className="h-4 w-4 mr-2" />
+ [2m183[0m | [35;1m|[0m                       Upload Document
+ [2m184[0m | [35;1m|[0m                     </Button>
+ [2m185[0m | [35;1m|[0m                   </div>
+ [2m186[0m | [35;1m|[0m                 </CardHeader>
+ [2m187[0m | [35;1m|[0m                 <CardContent>
+ [2m188[0m | [35;1m|[0m                   {packageData.documents && packageData.documents.length > 0 ? (
+ [2m189[0m | [35;1m|[0m                     <div className="space-y-3">
+ [2m190[0m | [35;1m|[0m                       {packageData.documents.map((doc, index) => (
+ [2m191[0m | [35;1m|[0m                         <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+ [2m192[0m | [35;1m|[0m                           <div className="flex items-center space-x-3">
+ [2m193[0m | [35;1m|[0m                             <FileText className="h-5 w-5 text-gray-400" />
+ [2m194[0m | [35;1m|[0m                             <span className="text-sm font-medium text-gray-900">{doc.name}</span>
+ [2m195[0m | [35;1m|[0m                           </div>
+ [2m196[0m | [35;1m|[0m                           <Button variant="outline" size="sm">
+ [2m197[0m | [35;1m|[0m                             View
+ [2m198[0m | [35;1m|[0m                           </Button>
+ [2m199[0m | [35;1m|[0m                         </div>
+ [2m200[0m | [35;1m|[0m                       ))}
+ [2m201[0m | [35;1m|[0m                     </div>
+ [2m202[0m | [35;1m|[0m                   ) : (
+ [2m203[0m | [35;1m|[0m                     <div className="text-center py-8">
+ [2m204[0m | [35;1m|[0m                       <FileText className="mx-auto h-12 w-12 text-gray-400" />
+ [2m205[0m | [35;1m|[0m                       <h3 className="mt-2 text-sm font-medium text-gray-900">No documents uploaded</h3>
+ [2m206[0m | [35;1m|[0m                       <p className="mt-1 text-sm text-gray-500">Upload your first document to get started.</p>
+ [2m207[0m | [35;1m|[0m                     </div>
+ [2m208[0m | [35;1m|[0m                   )}
+ [2m209[0m | [35;1m|[0m                 </CardContent>
+ [2m210[0m | [35;1m|[0m               </Card>
+ [2m211[0m | [35;1m|[0m             </div>
+ [2m212[0m | [35;1m|[0m   
+ [2m213[0m | [35;1m|[0m             {/* Sidebar */}
+ [2m214[0m | [35;1m|[0m             <div className="space-y-6">
+ [2m215[0m | [35;1m|[0m               {/* Status Management */}
+ [2m216[0m | [35;1m|[0m               <Card>
+ [2m217[0m | [35;1m|[0m                 <CardHeader>
+ [2m218[0m | [35;1m|[0m                   <h3 className="text-lg font-semibold text-gray-900">Status Management</h3>
+ [2m219[0m | [35;1m|[0m                 </CardHeader>
+ [2m220[0m | [35;1m|[0m                 <CardContent>
+ [2m221[0m | [35;1m|[0m                   <div className="space-y-3">
+ [2m222[0m | [35;1m|[0m                     {['Draft', 'Submitted', 'Completed'].map((status) => (
+ [2m223[0m | [35;1m|[0m                       <Button
+ [2m224[0m | [35;1m|[0m                         key={status}
+ [2m225[0m | [35;1m|[0m                         variant={packageData.status === status ? 'primary' : 'outline'}
+ [2m226[0m | [35;1m|[0m                         className="w-full justify-start"
+ [2m227[0m | [35;1m|[0m                         onClick={() => handleStatusChange(status)}
+ [2m228[0m | [35;1m|[0m                         disabled={loading}
+ [2m229[0m | [35;1m|[0m                       >
+ [2m230[0m | [35;1m|[0m                         {status}
+ [2m231[0m | [35;1m|[0m                       </Button>
+ [2m232[0m | [35;1m|[0m                     ))}
+ [2m233[0m | [35;1m|[0m                   </div>
+ [2m234[0m | [35;1m|[0m                 </CardContent>
+ [2m235[0m | [35;1m|[0m               </Card>
+ [2m236[0m | [35;1m|[0m   
+ [2m237[0m | [35;1m|[0m               {/* Quick Actions */}
+ [2m238[0m | [35;1m|[0m               <Card>
+ [2m239[0m | [35;1m|[0m                 <CardHeader>
+ [2m240[0m | [35;1m|[0m                   <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
+ [2m241[0m | [35;1m|[0m                 </CardHeader>
+ [2m242[0m | [35;1m|[0m                 <CardContent>
+ [2m243[0m | [35;1m|[0m                   <div className="space-y-3">
+ [2m244[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m245[0m | [35;1m|[0m                       Generate Report
+ [2m246[0m | [35;1m|[0m                     </Button>
+ [2m247[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m248[0m | [35;1m|[0m                       Send Notification
+ [2m249[0m | [35;1m|[0m                     </Button>
+ [2m250[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m251[0m | [35;1m|[0m                       Export Data
+ [2m252[0m | [35;1m|[0m                     </Button>
+ [2m253[0m | [35;1m|[0m                   </div>
+ [2m254[0m | [35;1m|[0m                 </CardContent>
+ [2m255[0m | [35;1m|[0m               </Card>
+ [2m256[0m | [35;1m|[0m             </div>
+ [2m257[0m | [35;1m|[0m           </div>
+ [2m258[0m | [35;1m|[0m         </div>
+ [2m259[0m | [35;1m|[0m   
+ [2m260[0m | [35;1m|[0m         {/* Upload Document Modal */}
+ [2m261[0m | [35;1m|[0m         {showUploadModal && (
+ [2m262[0m | [35;1m|[0m           <Modal onClose={() => setShowUploadModal(false)}>
+ [2m263[0m | [35;1m|[0m             <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+ [2m264[0m | [35;1m|[0m               <div className="px-6 py-4 border-b border-gray-200">
+ [2m265[0m | [35;1m|[0m                 <h3 className="text-lg font-medium text-gray-900">Upload Document</h3>
+ [2m266[0m | [35;1m|[0m               </div>
+ [2m267[0m | [35;1m|[0m               <form onSubmit={handleUploadDocument} className="p-6 space-y-4">
+ [2m268[0m | [35;1m|[0m                 <Input
+ [2m269[0m | [35;1m|[0m                   label="Document Name"
+ [2m270[0m | [35;1m|[0m                   value={uploadData.name}
+ [2m271[0m | [35;1m|[0m                   onChange={(e) => setUploadData(prev => ({ ...prev, name: e.target.value }))}
+ [2m272[0m | [35;1m|[0m                   placeholder="Enter document name"
+ [2m273[0m | [35;1m|[0m                 />
+ [2m274[0m | [35;1m|[0m                 
+ [2m275[0m | [35;1m|[0m                 <div>
+ [2m276[0m | [35;1m|[0m                   <label className="block text-sm font-medium text-gray-700 mb-1">
+ [2m277[0m | [35;1m|[0m                     Select File
+ [2m278[0m | [35;1m|[0m                   </label>
+ [2m279[0m | [35;1m|[0m                   <input
+ [2m280[0m | [35;1m|[0m                     type="file"
+ [2m281[0m | [35;1m|[0m                     onChange={(e) => setUploadData(prev => ({ ...prev, file: e.target.files[0] }))}
+ [2m282[0m | [35;1m|[0m                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
+ [2m283[0m | [35;1m|[0m                     required
+ [2m284[0m | [35;1m|[0m                   />
+ [2m285[0m | [35;1m|[0m                 </div>
+ [2m286[0m | [35;1m|[0m   
+ [2m287[0m | [35;1m|[0m                 <div className="flex justify-end space-x-3 pt-4">
+ [2m288[0m | [35;1m|[0m                   <Button
+ [2m289[0m | [35;1m|[0m                     type="button"
+ [2m290[0m | [35;1m|[0m                     variant="outline"
+ [2m291[0m | [35;1m|[0m                     onClick={() => setShowUploadModal(false)}
+ [2m292[0m | [35;1m|[0m                   >
+ [2m293[0m | [35;1m|[0m                     Cancel
+ [2m294[0m | [35;1m|[0m                   </Button>
+ [2m295[0m | [35;1m|[0m                   <Button type="submit" disabled={loading}>
+ [2m296[0m | [35;1m|[0m                     {loading ? 'Uploading...' : 'Upload'}
+ [2m297[0m | [35;1m|[0m                   </Button>
+ [2m298[0m | [35;1m|[0m                 </div>
+ [2m299[0m | [35;1m|[0m               </form>
+ [2m300[0m | [35;1m|[0m             </div>
+ [2m301[0m | [35;1m|[0m           </Modal>
+ [2m302[0m | [35;1m|[0m         )}
+ [2m303[0m | [35;1m|[0m       </div>
+ [2m304[0m | [35;1m`[0m[35;1m-[0m[35;1m>[0m   );
+ [2m305[0m |     }
+     `----
+  [31mx[0m Expression expected
+     ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:305:1]
+ [2m302[0m |       )}
+ [2m303[0m |     </div>
+ [2m304[0m |   );
+ [2m305[0m | }
+     : [35;1m^[0m
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/PackageDetailView.js
+./app/page.js
+ ○ Compiling /_not-found ...
+ ⨯ ./components/PackageDetailView.js
+Error:   [31mx[0m await isn't allowed in non-async function
+    ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:80:1]
+ [2m77[0m |         packageId: packageData.id
+ [2m78[0m |       };
+ [2m79[0m |       
+ [2m80[0m |       await apiService.uploadDocument(packageData.id, documentData);
+    : [35;1m      ^^^^^[0m
+ [2m81[0m |       
+ [2m82[0m |       const updatedPackage = {
+ [2m83[0m |         ...packageData,
+    `----
+  [31mx[0m Return statement is not allowed here
+     ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:106:1]
+ [2m103[0m |         return variants[status] || 'default';
+ [2m104[0m |       };
+ [2m105[0m |     
+ [2m106[0m | [35;1m,[0m[35;1m-[0m[35;1m>[0m   return (
+ [2m107[0m | [35;1m|[0m       <div className="min-h-screen bg-gray-50">
+ [2m108[0m | [35;1m|[0m         {/* Header */}
+ [2m109[0m | [35;1m|[0m         <header className="bg-white shadow-sm border-b">
+ [2m110[0m | [35;1m|[0m           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ [2m111[0m | [35;1m|[0m             <div className="flex items-center h-16">
+ [2m112[0m | [35;1m|[0m               <Button variant="outline" onClick={onBack} className="mr-4">
+ [2m113[0m | [35;1m|[0m                 <ArrowLeft className="h-4 w-4 mr-2" />
+ [2m114[0m | [35;1m|[0m                 Back to Dashboard
+ [2m115[0m | [35;1m|[0m               </Button>
+ [2m116[0m | [35;1m|[0m               <h1 className="text-2xl font-bold text-gray-900">Package Details</h1>
+ [2m117[0m | [35;1m|[0m             </div>
+ [2m118[0m | [35;1m|[0m           </div>
+ [2m119[0m | [35;1m|[0m         </header>
+ [2m120[0m | [35;1m|[0m   
+ [2m121[0m | [35;1m|[0m         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+ [2m122[0m | [35;1m|[0m           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+ [2m123[0m | [35;1m|[0m             {/* Main Content */}
+ [2m124[0m | [35;1m|[0m             <div className="lg:col-span-2 space-y-6">
+ [2m125[0m | [35;1m|[0m               {/* Package Information */}
+ [2m126[0m | [35;1m|[0m               <Card>
+ [2m127[0m | [35;1m|[0m                 <CardHeader>
+ [2m128[0m | [35;1m|[0m                   <div className="flex justify-between items-center">
+ [2m129[0m | [35;1m|[0m                     <h2 className="text-lg font-semibold text-gray-900">Package Information</h2>
+ [2m130[0m | [35;1m|[0m                     <Badge variant={getStatusVariant(packageData.status)}>
+ [2m131[0m | [35;1m|[0m                       {packageData.status}
+ [2m132[0m | [35;1m|[0m                     </Badge>
+ [2m133[0m | [35;1m|[0m                   </div>
+ [2m134[0m | [35;1m|[0m                 </CardHeader>
+ [2m135[0m | [35;1m|[0m                 <CardContent>
+ [2m136[0m | [35;1m|[0m                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+ [2m137[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m138[0m | [35;1m|[0m                       <User className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m139[0m | [35;1m|[0m                       <div>
+ [2m140[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Customer Name</p>
+ [2m141[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.customerName}</p>
+ [2m142[0m | [35;1m|[0m                       </div>
+ [2m143[0m | [35;1m|[0m                     </div>
+ [2m144[0m | [35;1m|[0m                     
+ [2m145[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m146[0m | [35;1m|[0m                       <MapPin className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m147[0m | [35;1m|[0m                       <div>
+ [2m148[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Property Address</p>
+ [2m149[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.propertyAddress}</p>
+ [2m150[0m | [35;1m|[0m                       </div>
+ [2m151[0m | [35;1m|[0m                     </div>
+ [2m152[0m | [35;1m|[0m                     
+ [2m153[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m154[0m | [35;1m|[0m                       <div className="h-5 w-5 bg-primary-100 rounded mt-0.5 flex items-center justify-center">
+ [2m155[0m | [35;1m|[0m                         <div className="h-2 w-2 bg-primary-600 rounded"></div>
+ [2m156[0m | [35;1m|[0m                       </div>
+ [2m157[0m | [35;1m|[0m                       <div>
+ [2m158[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">County</p>
+ [2m159[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.county}</p>
+ [2m160[0m | [35;1m|[0m                       </div>
+ [2m161[0m | [35;1m|[0m                     </div>
+ [2m162[0m | [35;1m|[0m                     
+ [2m163[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m164[0m | [35;1m|[0m                       <Calendar className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m165[0m | [35;1m|[0m                       <div>
+ [2m166[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Created Date</p>
+ [2m167[0m | [35;1m|[0m                         <p className="text-base text-gray-900">
+ [2m168[0m | [35;1m|[0m                           {new Date(packageData.createdAt).toLocaleDateString()}
+ [2m169[0m | [35;1m|[0m                         </p>
+ [2m170[0m | [35;1m|[0m                       </div>
+ [2m171[0m | [35;1m|[0m                     </div>
+ [2m172[0m | [35;1m|[0m                   </div>
+ [2m173[0m | [35;1m|[0m                 </CardContent>
+ [2m174[0m | [35;1m|[0m               </Card>
+ [2m175[0m | [35;1m|[0m   
+ [2m176[0m | [35;1m|[0m               {/* Documents */}
+ [2m177[0m | [35;1m|[0m               <Card>
+ [2m178[0m | [35;1m|[0m                 <CardHeader>
+ [2m179[0m | [35;1m|[0m                   <div className="flex justify-between items-center">
+ [2m180[0m | [35;1m|[0m                     <h2 className="text-lg font-semibold text-gray-900">Documents</h2>
+ [2m181[0m | [35;1m|[0m                     <Button onClick={() => setShowUploadModal(true)}>
+ [2m182[0m | [35;1m|[0m                       <Upload className="h-4 w-4 mr-2" />
+ [2m183[0m | [35;1m|[0m                       Upload Document
+ [2m184[0m | [35;1m|[0m                     </Button>
+ [2m185[0m | [35;1m|[0m                   </div>
+ [2m186[0m | [35;1m|[0m                 </CardHeader>
+ [2m187[0m | [35;1m|[0m                 <CardContent>
+ [2m188[0m | [35;1m|[0m                   {packageData.documents && packageData.documents.length > 0 ? (
+ [2m189[0m | [35;1m|[0m                     <div className="space-y-3">
+ [2m190[0m | [35;1m|[0m                       {packageData.documents.map((doc, index) => (
+ [2m191[0m | [35;1m|[0m                         <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+ [2m192[0m | [35;1m|[0m                           <div className="flex items-center space-x-3">
+ [2m193[0m | [35;1m|[0m                             <FileText className="h-5 w-5 text-gray-400" />
+ [2m194[0m | [35;1m|[0m                             <span className="text-sm font-medium text-gray-900">{doc.name}</span>
+ [2m195[0m | [35;1m|[0m                           </div>
+ [2m196[0m | [35;1m|[0m                           <Button variant="outline" size="sm">
+ [2m197[0m | [35;1m|[0m                             View
+ [2m198[0m | [35;1m|[0m                           </Button>
+ [2m199[0m | [35;1m|[0m                         </div>
+ [2m200[0m | [35;1m|[0m                       ))}
+ [2m201[0m | [35;1m|[0m                     </div>
+ [2m202[0m | [35;1m|[0m                   ) : (
+ [2m203[0m | [35;1m|[0m                     <div className="text-center py-8">
+ [2m204[0m | [35;1m|[0m                       <FileText className="mx-auto h-12 w-12 text-gray-400" />
+ [2m205[0m | [35;1m|[0m                       <h3 className="mt-2 text-sm font-medium text-gray-900">No documents uploaded</h3>
+ [2m206[0m | [35;1m|[0m                       <p className="mt-1 text-sm text-gray-500">Upload your first document to get started.</p>
+ [2m207[0m | [35;1m|[0m                     </div>
+ [2m208[0m | [35;1m|[0m                   )}
+ [2m209[0m | [35;1m|[0m                 </CardContent>
+ [2m210[0m | [35;1m|[0m               </Card>
+ [2m211[0m | [35;1m|[0m             </div>
+ [2m212[0m | [35;1m|[0m   
+ [2m213[0m | [35;1m|[0m             {/* Sidebar */}
+ [2m214[0m | [35;1m|[0m             <div className="space-y-6">
+ [2m215[0m | [35;1m|[0m               {/* Status Management */}
+ [2m216[0m | [35;1m|[0m               <Card>
+ [2m217[0m | [35;1m|[0m                 <CardHeader>
+ [2m218[0m | [35;1m|[0m                   <h3 className="text-lg font-semibold text-gray-900">Status Management</h3>
+ [2m219[0m | [35;1m|[0m                 </CardHeader>
+ [2m220[0m | [35;1m|[0m                 <CardContent>
+ [2m221[0m | [35;1m|[0m                   <div className="space-y-3">
+ [2m222[0m | [35;1m|[0m                     {['Draft', 'Submitted', 'Completed'].map((status) => (
+ [2m223[0m | [35;1m|[0m                       <Button
+ [2m224[0m | [35;1m|[0m                         key={status}
+ [2m225[0m | [35;1m|[0m                         variant={packageData.status === status ? 'primary' : 'outline'}
+ [2m226[0m | [35;1m|[0m                         className="w-full justify-start"
+ [2m227[0m | [35;1m|[0m                         onClick={() => handleStatusChange(status)}
+ [2m228[0m | [35;1m|[0m                         disabled={loading}
+ [2m229[0m | [35;1m|[0m                       >
+ [2m230[0m | [35;1m|[0m                         {status}
+ [2m231[0m | [35;1m|[0m                       </Button>
+ [2m232[0m | [35;1m|[0m                     ))}
+ [2m233[0m | [35;1m|[0m                   </div>
+ [2m234[0m | [35;1m|[0m                 </CardContent>
+ [2m235[0m | [35;1m|[0m               </Card>
+ [2m236[0m | [35;1m|[0m   
+ [2m237[0m | [35;1m|[0m               {/* Quick Actions */}
+ [2m238[0m | [35;1m|[0m               <Card>
+ [2m239[0m | [35;1m|[0m                 <CardHeader>
+ [2m240[0m | [35;1m|[0m                   <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
+ [2m241[0m | [35;1m|[0m                 </CardHeader>
+ [2m242[0m | [35;1m|[0m                 <CardContent>
+ [2m243[0m | [35;1m|[0m                   <div className="space-y-3">
+ [2m244[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m245[0m | [35;1m|[0m                       Generate Report
+ [2m246[0m | [35;1m|[0m                     </Button>
+ [2m247[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m248[0m | [35;1m|[0m                       Send Notification
+ [2m249[0m | [35;1m|[0m                     </Button>
+ [2m250[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m251[0m | [35;1m|[0m                       Export Data
+ [2m252[0m | [35;1m|[0m                     </Button>
+ [2m253[0m | [35;1m|[0m                   </div>
+ [2m254[0m | [35;1m|[0m                 </CardContent>
+ [2m255[0m | [35;1m|[0m               </Card>
+ [2m256[0m | [35;1m|[0m             </div>
+ [2m257[0m | [35;1m|[0m           </div>
+ [2m258[0m | [35;1m|[0m         </div>
+ [2m259[0m | [35;1m|[0m   
+ [2m260[0m | [35;1m|[0m         {/* Upload Document Modal */}
+ [2m261[0m | [35;1m|[0m         {showUploadModal && (
+ [2m262[0m | [35;1m|[0m           <Modal onClose={() => setShowUploadModal(false)}>
+ [2m263[0m | [35;1m|[0m             <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+ [2m264[0m | [35;1m|[0m               <div className="px-6 py-4 border-b border-gray-200">
+ [2m265[0m | [35;1m|[0m                 <h3 className="text-lg font-medium text-gray-900">Upload Document</h3>
+ [2m266[0m | [35;1m|[0m               </div>
+ [2m267[0m | [35;1m|[0m               <form onSubmit={handleUploadDocument} className="p-6 space-y-4">
+ [2m268[0m | [35;1m|[0m                 <Input
+ [2m269[0m | [35;1m|[0m                   label="Document Name"
+ [2m270[0m | [35;1m|[0m                   value={uploadData.name}
+ [2m271[0m | [35;1m|[0m                   onChange={(e) => setUploadData(prev => ({ ...prev, name: e.target.value }))}
+ [2m272[0m | [35;1m|[0m                   placeholder="Enter document name"
+ [2m273[0m | [35;1m|[0m                 />
+ [2m274[0m | [35;1m|[0m                 
+ [2m275[0m | [35;1m|[0m                 <div>
+ [2m276[0m | [35;1m|[0m                   <label className="block text-sm font-medium text-gray-700 mb-1">
+ [2m277[0m | [35;1m|[0m                     Select File
+ [2m278[0m | [35;1m|[0m                   </label>
+ [2m279[0m | [35;1m|[0m                   <input
+ [2m280[0m | [35;1m|[0m                     type="file"
+ [2m281[0m | [35;1m|[0m                     onChange={(e) => setUploadData(prev => ({ ...prev, file: e.target.files[0] }))}
+ [2m282[0m | [35;1m|[0m                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
+ [2m283[0m | [35;1m|[0m                     required
+ [2m284[0m | [35;1m|[0m                   />
+ [2m285[0m | [35;1m|[0m                 </div>
+ [2m286[0m | [35;1m|[0m   
+ [2m287[0m | [35;1m|[0m                 <div className="flex justify-end space-x-3 pt-4">
+ [2m288[0m | [35;1m|[0m                   <Button
+ [2m289[0m | [35;1m|[0m                     type="button"
+ [2m290[0m | [35;1m|[0m                     variant="outline"
+ [2m291[0m | [35;1m|[0m                     onClick={() => setShowUploadModal(false)}
+ [2m292[0m | [35;1m|[0m                   >
+ [2m293[0m | [35;1m|[0m                     Cancel
+ [2m294[0m | [35;1m|[0m                   </Button>
+ [2m295[0m | [35;1m|[0m                   <Button type="submit" disabled={loading}>
+ [2m296[0m | [35;1m|[0m                     {loading ? 'Uploading...' : 'Upload'}
+ [2m297[0m | [35;1m|[0m                   </Button>
+ [2m298[0m | [35;1m|[0m                 </div>
+ [2m299[0m | [35;1m|[0m               </form>
+ [2m300[0m | [35;1m|[0m             </div>
+ [2m301[0m | [35;1m|[0m           </Modal>
+ [2m302[0m | [35;1m|[0m         )}
+ [2m303[0m | [35;1m|[0m       </div>
+ [2m304[0m | [35;1m`[0m[35;1m-[0m[35;1m>[0m   );
+ [2m305[0m |     }
+     `----
+  [31mx[0m Expression expected
+     ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:305:1]
+ [2m302[0m |       )}
+ [2m303[0m |     </div>
+ [2m304[0m |   );
+ [2m305[0m | }
+     : [35;1m^[0m
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/PackageDetailView.js
+./app/page.js
+ ⨯ ./components/PackageDetailView.js
+Error:   [31mx[0m await isn't allowed in non-async function
+    ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:80:1]
+ [2m77[0m |         packageId: packageData.id
+ [2m78[0m |       };
+ [2m79[0m |       
+ [2m80[0m |       await apiService.uploadDocument(packageData.id, documentData);
+    : [35;1m      ^^^^^[0m
+ [2m81[0m |       
+ [2m82[0m |       const updatedPackage = {
+ [2m83[0m |         ...packageData,
+    `----
+  [31mx[0m Return statement is not allowed here
+     ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:106:1]
+ [2m103[0m |         return variants[status] || 'default';
+ [2m104[0m |       };
+ [2m105[0m |     
+ [2m106[0m | [35;1m,[0m[35;1m-[0m[35;1m>[0m   return (
+ [2m107[0m | [35;1m|[0m       <div className="min-h-screen bg-gray-50">
+ [2m108[0m | [35;1m|[0m         {/* Header */}
+ [2m109[0m | [35;1m|[0m         <header className="bg-white shadow-sm border-b">
+ [2m110[0m | [35;1m|[0m           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ [2m111[0m | [35;1m|[0m             <div className="flex items-center h-16">
+ [2m112[0m | [35;1m|[0m               <Button variant="outline" onClick={onBack} className="mr-4">
+ [2m113[0m | [35;1m|[0m                 <ArrowLeft className="h-4 w-4 mr-2" />
+ [2m114[0m | [35;1m|[0m                 Back to Dashboard
+ [2m115[0m | [35;1m|[0m               </Button>
+ [2m116[0m | [35;1m|[0m               <h1 className="text-2xl font-bold text-gray-900">Package Details</h1>
+ [2m117[0m | [35;1m|[0m             </div>
+ [2m118[0m | [35;1m|[0m           </div>
+ [2m119[0m | [35;1m|[0m         </header>
+ [2m120[0m | [35;1m|[0m   
+ [2m121[0m | [35;1m|[0m         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+ [2m122[0m | [35;1m|[0m           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+ [2m123[0m | [35;1m|[0m             {/* Main Content */}
+ [2m124[0m | [35;1m|[0m             <div className="lg:col-span-2 space-y-6">
+ [2m125[0m | [35;1m|[0m               {/* Package Information */}
+ [2m126[0m | [35;1m|[0m               <Card>
+ [2m127[0m | [35;1m|[0m                 <CardHeader>
+ [2m128[0m | [35;1m|[0m                   <div className="flex justify-between items-center">
+ [2m129[0m | [35;1m|[0m                     <h2 className="text-lg font-semibold text-gray-900">Package Information</h2>
+ [2m130[0m | [35;1m|[0m                     <Badge variant={getStatusVariant(packageData.status)}>
+ [2m131[0m | [35;1m|[0m                       {packageData.status}
+ [2m132[0m | [35;1m|[0m                     </Badge>
+ [2m133[0m | [35;1m|[0m                   </div>
+ [2m134[0m | [35;1m|[0m                 </CardHeader>
+ [2m135[0m | [35;1m|[0m                 <CardContent>
+ [2m136[0m | [35;1m|[0m                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+ [2m137[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m138[0m | [35;1m|[0m                       <User className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m139[0m | [35;1m|[0m                       <div>
+ [2m140[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Customer Name</p>
+ [2m141[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.customerName}</p>
+ [2m142[0m | [35;1m|[0m                       </div>
+ [2m143[0m | [35;1m|[0m                     </div>
+ [2m144[0m | [35;1m|[0m                     
+ [2m145[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m146[0m | [35;1m|[0m                       <MapPin className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m147[0m | [35;1m|[0m                       <div>
+ [2m148[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Property Address</p>
+ [2m149[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.propertyAddress}</p>
+ [2m150[0m | [35;1m|[0m                       </div>
+ [2m151[0m | [35;1m|[0m                     </div>
+ [2m152[0m | [35;1m|[0m                     
+ [2m153[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m154[0m | [35;1m|[0m                       <div className="h-5 w-5 bg-primary-100 rounded mt-0.5 flex items-center justify-center">
+ [2m155[0m | [35;1m|[0m                         <div className="h-2 w-2 bg-primary-600 rounded"></div>
+ [2m156[0m | [35;1m|[0m                       </div>
+ [2m157[0m | [35;1m|[0m                       <div>
+ [2m158[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">County</p>
+ [2m159[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.county}</p>
+ [2m160[0m | [35;1m|[0m                       </div>
+ [2m161[0m | [35;1m|[0m                     </div>
+ [2m162[0m | [35;1m|[0m                     
+ [2m163[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m164[0m | [35;1m|[0m                       <Calendar className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m165[0m | [35;1m|[0m                       <div>
+ [2m166[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Created Date</p>
+ [2m167[0m | [35;1m|[0m                         <p className="text-base text-gray-900">
+ [2m168[0m | [35;1m|[0m                           {new Date(packageData.createdAt).toLocaleDateString()}
+ [2m169[0m | [35;1m|[0m                         </p>
+ [2m170[0m | [35;1m|[0m                       </div>
+ [2m171[0m | [35;1m|[0m                     </div>
+ [2m172[0m | [35;1m|[0m                   </div>
+ [2m173[0m | [35;1m|[0m                 </CardContent>
+ [2m174[0m | [35;1m|[0m               </Card>
+ [2m175[0m | [35;1m|[0m   
+ [2m176[0m | [35;1m|[0m               {/* Documents */}
+ [2m177[0m | [35;1m|[0m               <Card>
+ [2m178[0m | [35;1m|[0m                 <CardHeader>
+ [2m179[0m | [35;1m|[0m                   <div className="flex justify-between items-center">
+ [2m180[0m | [35;1m|[0m                     <h2 className="text-lg font-semibold text-gray-900">Documents</h2>
+ [2m181[0m | [35;1m|[0m                     <Button onClick={() => setShowUploadModal(true)}>
+ [2m182[0m | [35;1m|[0m                       <Upload className="h-4 w-4 mr-2" />
+ [2m183[0m | [35;1m|[0m                       Upload Document
+ [2m184[0m | [35;1m|[0m                     </Button>
+ [2m185[0m | [35;1m|[0m                   </div>
+ [2m186[0m | [35;1m|[0m                 </CardHeader>
+ [2m187[0m | [35;1m|[0m                 <CardContent>
+ [2m188[0m | [35;1m|[0m                   {packageData.documents && packageData.documents.length > 0 ? (
+ [2m189[0m | [35;1m|[0m                     <div className="space-y-3">
+ [2m190[0m | [35;1m|[0m                       {packageData.documents.map((doc, index) => (
+ [2m191[0m | [35;1m|[0m                         <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+ [2m192[0m | [35;1m|[0m                           <div className="flex items-center space-x-3">
+ [2m193[0m | [35;1m|[0m                             <FileText className="h-5 w-5 text-gray-400" />
+ [2m194[0m | [35;1m|[0m                             <span className="text-sm font-medium text-gray-900">{doc.name}</span>
+ [2m195[0m | [35;1m|[0m                           </div>
+ [2m196[0m | [35;1m|[0m                           <Button variant="outline" size="sm">
+ [2m197[0m | [35;1m|[0m                             View
+ [2m198[0m | [35;1m|[0m                           </Button>
+ [2m199[0m | [35;1m|[0m                         </div>
+ [2m200[0m | [35;1m|[0m                       ))}
+ [2m201[0m | [35;1m|[0m                     </div>
+ [2m202[0m | [35;1m|[0m                   ) : (
+ [2m203[0m | [35;1m|[0m                     <div className="text-center py-8">
+ [2m204[0m | [35;1m|[0m                       <FileText className="mx-auto h-12 w-12 text-gray-400" />
+ [2m205[0m | [35;1m|[0m                       <h3 className="mt-2 text-sm font-medium text-gray-900">No documents uploaded</h3>
+ [2m206[0m | [35;1m|[0m                       <p className="mt-1 text-sm text-gray-500">Upload your first document to get started.</p>
+ [2m207[0m | [35;1m|[0m                     </div>
+ [2m208[0m | [35;1m|[0m                   )}
+ [2m209[0m | [35;1m|[0m                 </CardContent>
+ [2m210[0m | [35;1m|[0m               </Card>
+ [2m211[0m | [35;1m|[0m             </div>
+ [2m212[0m | [35;1m|[0m   
+ [2m213[0m | [35;1m|[0m             {/* Sidebar */}
+ [2m214[0m | [35;1m|[0m             <div className="space-y-6">
+ [2m215[0m | [35;1m|[0m               {/* Status Management */}
+ [2m216[0m | [35;1m|[0m               <Card>
+ [2m217[0m | [35;1m|[0m                 <CardHeader>
+ [2m218[0m | [35;1m|[0m                   <h3 className="text-lg font-semibold text-gray-900">Status Management</h3>
+ [2m219[0m | [35;1m|[0m                 </CardHeader>
+ [2m220[0m | [35;1m|[0m                 <CardContent>
+ [2m221[0m | [35;1m|[0m                   <div className="space-y-3">
+ [2m222[0m | [35;1m|[0m                     {['Draft', 'Submitted', 'Completed'].map((status) => (
+ [2m223[0m | [35;1m|[0m                       <Button
+ [2m224[0m | [35;1m|[0m                         key={status}
+ [2m225[0m | [35;1m|[0m                         variant={packageData.status === status ? 'primary' : 'outline'}
+ [2m226[0m | [35;1m|[0m                         className="w-full justify-start"
+ [2m227[0m | [35;1m|[0m                         onClick={() => handleStatusChange(status)}
+ [2m228[0m | [35;1m|[0m                         disabled={loading}
+ [2m229[0m | [35;1m|[0m                       >
+ [2m230[0m | [35;1m|[0m                         {status}
+ [2m231[0m | [35;1m|[0m                       </Button>
+ [2m232[0m | [35;1m|[0m                     ))}
+ [2m233[0m | [35;1m|[0m                   </div>
+ [2m234[0m | [35;1m|[0m                 </CardContent>
+ [2m235[0m | [35;1m|[0m               </Card>
+ [2m236[0m | [35;1m|[0m   
+ [2m237[0m | [35;1m|[0m               {/* Quick Actions */}
+ [2m238[0m | [35;1m|[0m               <Card>
+ [2m239[0m | [35;1m|[0m                 <CardHeader>
+ [2m240[0m | [35;1m|[0m                   <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
+ [2m241[0m | [35;1m|[0m                 </CardHeader>
+ [2m242[0m | [35;1m|[0m                 <CardContent>
+ [2m243[0m | [35;1m|[0m                   <div className="space-y-3">
+ [2m244[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m245[0m | [35;1m|[0m                       Generate Report
+ [2m246[0m | [35;1m|[0m                     </Button>
+ [2m247[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m248[0m | [35;1m|[0m                       Send Notification
+ [2m249[0m | [35;1m|[0m                     </Button>
+ [2m250[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m251[0m | [35;1m|[0m                       Export Data
+ [2m252[0m | [35;1m|[0m                     </Button>
+ [2m253[0m | [35;1m|[0m                   </div>
+ [2m254[0m | [35;1m|[0m                 </CardContent>
+ [2m255[0m | [35;1m|[0m               </Card>
+ [2m256[0m | [35;1m|[0m             </div>
+ [2m257[0m | [35;1m|[0m           </div>
+ [2m258[0m | [35;1m|[0m         </div>
+ [2m259[0m | [35;1m|[0m   
+ [2m260[0m | [35;1m|[0m         {/* Upload Document Modal */}
+ [2m261[0m | [35;1m|[0m         {showUploadModal && (
+ [2m262[0m | [35;1m|[0m           <Modal onClose={() => setShowUploadModal(false)}>
+ [2m263[0m | [35;1m|[0m             <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+ [2m264[0m | [35;1m|[0m               <div className="px-6 py-4 border-b border-gray-200">
+ [2m265[0m | [35;1m|[0m                 <h3 className="text-lg font-medium text-gray-900">Upload Document</h3>
+ [2m266[0m | [35;1m|[0m               </div>
+ [2m267[0m | [35;1m|[0m               <form onSubmit={handleUploadDocument} className="p-6 space-y-4">
+ [2m268[0m | [35;1m|[0m                 <Input
+ [2m269[0m | [35;1m|[0m                   label="Document Name"
+ [2m270[0m | [35;1m|[0m                   value={uploadData.name}
+ [2m271[0m | [35;1m|[0m                   onChange={(e) => setUploadData(prev => ({ ...prev, name: e.target.value }))}
+ [2m272[0m | [35;1m|[0m                   placeholder="Enter document name"
+ [2m273[0m | [35;1m|[0m                 />
+ [2m274[0m | [35;1m|[0m                 
+ [2m275[0m | [35;1m|[0m                 <div>
+ [2m276[0m | [35;1m|[0m                   <label className="block text-sm font-medium text-gray-700 mb-1">
+ [2m277[0m | [35;1m|[0m                     Select File
+ [2m278[0m | [35;1m|[0m                   </label>
+ [2m279[0m | [35;1m|[0m                   <input
+ [2m280[0m | [35;1m|[0m                     type="file"
+ [2m281[0m | [35;1m|[0m                     onChange={(e) => setUploadData(prev => ({ ...prev, file: e.target.files[0] }))}
+ [2m282[0m | [35;1m|[0m                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
+ [2m283[0m | [35;1m|[0m                     required
+ [2m284[0m | [35;1m|[0m                   />
+ [2m285[0m | [35;1m|[0m                 </div>
+ [2m286[0m | [35;1m|[0m   
+ [2m287[0m | [35;1m|[0m                 <div className="flex justify-end space-x-3 pt-4">
+ [2m288[0m | [35;1m|[0m                   <Button
+ [2m289[0m | [35;1m|[0m                     type="button"
+ [2m290[0m | [35;1m|[0m                     variant="outline"
+ [2m291[0m | [35;1m|[0m                     onClick={() => setShowUploadModal(false)}
+ [2m292[0m | [35;1m|[0m                   >
+ [2m293[0m | [35;1m|[0m                     Cancel
+ [2m294[0m | [35;1m|[0m                   </Button>
+ [2m295[0m | [35;1m|[0m                   <Button type="submit" disabled={loading}>
+ [2m296[0m | [35;1m|[0m                     {loading ? 'Uploading...' : 'Upload'}
+ [2m297[0m | [35;1m|[0m                   </Button>
+ [2m298[0m | [35;1m|[0m                 </div>
+ [2m299[0m | [35;1m|[0m               </form>
+ [2m300[0m | [35;1m|[0m             </div>
+ [2m301[0m | [35;1m|[0m           </Modal>
+ [2m302[0m | [35;1m|[0m         )}
+ [2m303[0m | [35;1m|[0m       </div>
+ [2m304[0m | [35;1m`[0m[35;1m-[0m[35;1m>[0m   );
+ [2m305[0m |     }
+     `----
+  [31mx[0m Expression expected
+     ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:305:1]
+ [2m302[0m |       )}
+ [2m303[0m |     </div>
+ [2m304[0m |   );
+ [2m305[0m | }
+     : [35;1m^[0m
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/PackageDetailView.js
+./app/page.js
+ GET /installHook.js.map 500 in 8652ms
+ GET / 500 in 1588ms
+ GET / 500 in 29ms
+ GET / 500 in 34ms
+ ⨯ ./components/PackageDetailView.js
+Error:   [31mx[0m await isn't allowed in non-async function
+    ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:80:1]
+ [2m77[0m |         packageId: packageData.id
+ [2m78[0m |       };
+ [2m79[0m |       
+ [2m80[0m |       await apiService.uploadDocument(packageData.id, documentData);
+    : [35;1m      ^^^^^[0m
+ [2m81[0m |       
+ [2m82[0m |       const updatedPackage = {
+ [2m83[0m |         ...packageData,
+    `----
+  [31mx[0m Return statement is not allowed here
+     ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:106:1]
+ [2m103[0m |         return variants[status] || 'default';
+ [2m104[0m |       };
+ [2m105[0m |     
+ [2m106[0m | [35;1m,[0m[35;1m-[0m[35;1m>[0m   return (
+ [2m107[0m | [35;1m|[0m       <div className="min-h-screen bg-gray-50">
+ [2m108[0m | [35;1m|[0m         {/* Header */}
+ [2m109[0m | [35;1m|[0m         <header className="bg-white shadow-sm border-b">
+ [2m110[0m | [35;1m|[0m           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ [2m111[0m | [35;1m|[0m             <div className="flex items-center h-16">
+ [2m112[0m | [35;1m|[0m               <Button variant="outline" onClick={onBack} className="mr-4">
+ [2m113[0m | [35;1m|[0m                 <ArrowLeft className="h-4 w-4 mr-2" />
+ [2m114[0m | [35;1m|[0m                 Back to Dashboard
+ [2m115[0m | [35;1m|[0m               </Button>
+ [2m116[0m | [35;1m|[0m               <h1 className="text-2xl font-bold text-gray-900">Package Details</h1>
+ [2m117[0m | [35;1m|[0m             </div>
+ [2m118[0m | [35;1m|[0m           </div>
+ [2m119[0m | [35;1m|[0m         </header>
+ [2m120[0m | [35;1m|[0m   
+ [2m121[0m | [35;1m|[0m         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+ [2m122[0m | [35;1m|[0m           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+ [2m123[0m | [35;1m|[0m             {/* Main Content */}
+ [2m124[0m | [35;1m|[0m             <div className="lg:col-span-2 space-y-6">
+ [2m125[0m | [35;1m|[0m               {/* Package Information */}
+ [2m126[0m | [35;1m|[0m               <Card>
+ [2m127[0m | [35;1m|[0m                 <CardHeader>
+ [2m128[0m | [35;1m|[0m                   <div className="flex justify-between items-center">
+ [2m129[0m | [35;1m|[0m                     <h2 className="text-lg font-semibold text-gray-900">Package Information</h2>
+ [2m130[0m | [35;1m|[0m                     <Badge variant={getStatusVariant(packageData.status)}>
+ [2m131[0m | [35;1m|[0m                       {packageData.status}
+ [2m132[0m | [35;1m|[0m                     </Badge>
+ [2m133[0m | [35;1m|[0m                   </div>
+ [2m134[0m | [35;1m|[0m                 </CardHeader>
+ [2m135[0m | [35;1m|[0m                 <CardContent>
+ [2m136[0m | [35;1m|[0m                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+ [2m137[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m138[0m | [35;1m|[0m                       <User className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m139[0m | [35;1m|[0m                       <div>
+ [2m140[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Customer Name</p>
+ [2m141[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.customerName}</p>
+ [2m142[0m | [35;1m|[0m                       </div>
+ [2m143[0m | [35;1m|[0m                     </div>
+ [2m144[0m | [35;1m|[0m                     
+ [2m145[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m146[0m | [35;1m|[0m                       <MapPin className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m147[0m | [35;1m|[0m                       <div>
+ [2m148[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Property Address</p>
+ [2m149[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.propertyAddress}</p>
+ [2m150[0m | [35;1m|[0m                       </div>
+ [2m151[0m | [35;1m|[0m                     </div>
+ [2m152[0m | [35;1m|[0m                     
+ [2m153[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m154[0m | [35;1m|[0m                       <div className="h-5 w-5 bg-primary-100 rounded mt-0.5 flex items-center justify-center">
+ [2m155[0m | [35;1m|[0m                         <div className="h-2 w-2 bg-primary-600 rounded"></div>
+ [2m156[0m | [35;1m|[0m                       </div>
+ [2m157[0m | [35;1m|[0m                       <div>
+ [2m158[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">County</p>
+ [2m159[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.county}</p>
+ [2m160[0m | [35;1m|[0m                       </div>
+ [2m161[0m | [35;1m|[0m                     </div>
+ [2m162[0m | [35;1m|[0m                     
+ [2m163[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m164[0m | [35;1m|[0m                       <Calendar className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m165[0m | [35;1m|[0m                       <div>
+ [2m166[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Created Date</p>
+ [2m167[0m | [35;1m|[0m                         <p className="text-base text-gray-900">
+ [2m168[0m | [35;1m|[0m                           {new Date(packageData.createdAt).toLocaleDateString()}
+ [2m169[0m | [35;1m|[0m                         </p>
+ [2m170[0m | [35;1m|[0m                       </div>
+ [2m171[0m | [35;1m|[0m                     </div>
+ [2m172[0m | [35;1m|[0m                   </div>
+ [2m173[0m | [35;1m|[0m                 </CardContent>
+ [2m174[0m | [35;1m|[0m               </Card>
+ [2m175[0m | [35;1m|[0m   
+ [2m176[0m | [35;1m|[0m               {/* Documents */}
+ [2m177[0m | [35;1m|[0m               <Card>
+ [2m178[0m | [35;1m|[0m                 <CardHeader>
+ [2m179[0m | [35;1m|[0m                   <div className="flex justify-between items-center">
+ [2m180[0m | [35;1m|[0m                     <h2 className="text-lg font-semibold text-gray-900">Documents</h2>
+ [2m181[0m | [35;1m|[0m                     <div className="flex space-x-2">
+ [2m182[0m | [35;1m|[0m                       {packageData.documents && packageData.documents.length > 0 && (
+ [2m183[0m | [35;1m|[0m                         <Button 
+ [2m184[0m | [35;1m|[0m                           variant="outline" 
+ [2m185[0m | [35;1m|[0m                           onClick={handleDownloadAll}
+ [2m186[0m | [35;1m|[0m                           disabled={loading}
+ [2m187[0m | [35;1m|[0m                         >
+ [2m188[0m | [35;1m|[0m                           <Download className="h-4 w-4 mr-2" />
+ [2m189[0m | [35;1m|[0m                           {loading ? 'Preparing...' : 'Download All'}
+ [2m190[0m | [35;1m|[0m                         </Button>
+ [2m191[0m | [35;1m|[0m                       )}
+ [2m192[0m | [35;1m|[0m                       <Button onClick={() => setShowUploadModal(true)}>
+ [2m193[0m | [35;1m|[0m                         <Upload className="h-4 w-4 mr-2" />
+ [2m194[0m | [35;1m|[0m                         Upload Document
+ [2m195[0m | [35;1m|[0m                       </Button>
+ [2m196[0m | [35;1m|[0m                     </div>
+ [2m197[0m | [35;1m|[0m                   </div>
+ [2m198[0m | [35;1m|[0m                 </CardHeader>
+ [2m199[0m | [35;1m|[0m                 <CardContent>
+ [2m200[0m | [35;1m|[0m                   {packageData.documents && packageData.documents.length > 0 ? (
+ [2m201[0m | [35;1m|[0m                     <div className="space-y-3">
+ [2m202[0m | [35;1m|[0m                       {packageData.documents.map((doc, index) => (
+ [2m203[0m | [35;1m|[0m                         <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+ [2m204[0m | [35;1m|[0m                           <div className="flex items-center space-x-3">
+ [2m205[0m | [35;1m|[0m                             <FileText className="h-5 w-5 text-gray-400" />
+ [2m206[0m | [35;1m|[0m                             <span className="text-sm font-medium text-gray-900">{doc.name}</span>
+ [2m207[0m | [35;1m|[0m                           </div>
+ [2m208[0m | [35;1m|[0m                           <Button variant="outline" size="sm">
+ [2m209[0m | [35;1m|[0m                             View
+ [2m210[0m | [35;1m|[0m                           </Button>
+ [2m211[0m | [35;1m|[0m                         </div>
+ [2m212[0m | [35;1m|[0m                       ))}
+ [2m213[0m | [35;1m|[0m                     </div>
+ [2m214[0m | [35;1m|[0m                   ) : (
+ [2m215[0m | [35;1m|[0m                     <div className="text-center py-8">
+ [2m216[0m | [35;1m|[0m                       <FileText className="mx-auto h-12 w-12 text-gray-400" />
+ [2m217[0m | [35;1m|[0m                       <h3 className="mt-2 text-sm font-medium text-gray-900">No documents uploaded</h3>
+ [2m218[0m | [35;1m|[0m                       <p className="mt-1 text-sm text-gray-500">Upload your first document to get started.</p>
+ [2m219[0m | [35;1m|[0m                     </div>
+ [2m220[0m | [35;1m|[0m                   )}
+ [2m221[0m | [35;1m|[0m                 </CardContent>
+ [2m222[0m | [35;1m|[0m               </Card>
+ [2m223[0m | [35;1m|[0m             </div>
+ [2m224[0m | [35;1m|[0m   
+ [2m225[0m | [35;1m|[0m             {/* Sidebar */}
+ [2m226[0m | [35;1m|[0m             <div className="space-y-6">
+ [2m227[0m | [35;1m|[0m               {/* Status Management */}
+ [2m228[0m | [35;1m|[0m               <Card>
+ [2m229[0m | [35;1m|[0m                 <CardHeader>
+ [2m230[0m | [35;1m|[0m                   <h3 className="text-lg font-semibold text-gray-900">Status Management</h3>
+ [2m231[0m | [35;1m|[0m                 </CardHeader>
+ [2m232[0m | [35;1m|[0m                 <CardContent>
+ [2m233[0m | [35;1m|[0m                   <div className="space-y-3">
+ [2m234[0m | [35;1m|[0m                     {['Draft', 'Submitted', 'Completed'].map((status) => (
+ [2m235[0m | [35;1m|[0m                       <Button
+ [2m236[0m | [35;1m|[0m                         key={status}
+ [2m237[0m | [35;1m|[0m                         variant={packageData.status === status ? 'primary' : 'outline'}
+ [2m238[0m | [35;1m|[0m                         className="w-full justify-start"
+ [2m239[0m | [35;1m|[0m                         onClick={() => handleStatusChange(status)}
+ [2m240[0m | [35;1m|[0m                         disabled={loading}
+ [2m241[0m | [35;1m|[0m                       >
+ [2m242[0m | [35;1m|[0m                         {status}
+ [2m243[0m | [35;1m|[0m                       </Button>
+ [2m244[0m | [35;1m|[0m                     ))}
+ [2m245[0m | [35;1m|[0m                   </div>
+ [2m246[0m | [35;1m|[0m                 </CardContent>
+ [2m247[0m | [35;1m|[0m               </Card>
+ [2m248[0m | [35;1m|[0m   
+ [2m249[0m | [35;1m|[0m               {/* Quick Actions */}
+ [2m250[0m | [35;1m|[0m               <Card>
+ [2m251[0m | [35;1m|[0m                 <CardHeader>
+ [2m252[0m | [35;1m|[0m                   <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
+ [2m253[0m | [35;1m|[0m                 </CardHeader>
+ [2m254[0m | [35;1m|[0m                 <CardContent>
+ [2m255[0m | [35;1m|[0m                   <div className="space-y-3">
+ [2m256[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m257[0m | [35;1m|[0m                       Generate Report
+ [2m258[0m | [35;1m|[0m                     </Button>
+ [2m259[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m260[0m | [35;1m|[0m                       Send Notification
+ [2m261[0m | [35;1m|[0m                     </Button>
+ [2m262[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m263[0m | [35;1m|[0m                       Export Data
+ [2m264[0m | [35;1m|[0m                     </Button>
+ [2m265[0m | [35;1m|[0m                   </div>
+ [2m266[0m | [35;1m|[0m                 </CardContent>
+ [2m267[0m | [35;1m|[0m               </Card>
+ [2m268[0m | [35;1m|[0m             </div>
+ [2m269[0m | [35;1m|[0m           </div>
+ [2m270[0m | [35;1m|[0m         </div>
+ [2m271[0m | [35;1m|[0m   
+ [2m272[0m | [35;1m|[0m         {/* Upload Document Modal */}
+ [2m273[0m | [35;1m|[0m         {showUploadModal && (
+ [2m274[0m | [35;1m|[0m           <Modal onClose={() => setShowUploadModal(false)}>
+ [2m275[0m | [35;1m|[0m             <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+ [2m276[0m | [35;1m|[0m               <div className="px-6 py-4 border-b border-gray-200">
+ [2m277[0m | [35;1m|[0m                 <h3 className="text-lg font-medium text-gray-900">Upload Document</h3>
+ [2m278[0m | [35;1m|[0m               </div>
+ [2m279[0m | [35;1m|[0m               <form onSubmit={handleUploadDocument} className="p-6 space-y-4">
+ [2m280[0m | [35;1m|[0m                 <Input
+ [2m281[0m | [35;1m|[0m                   label="Document Name"
+ [2m282[0m | [35;1m|[0m                   value={uploadData.name}
+ [2m283[0m | [35;1m|[0m                   onChange={(e) => setUploadData(prev => ({ ...prev, name: e.target.value }))}
+ [2m284[0m | [35;1m|[0m                   placeholder="Enter document name"
+ [2m285[0m | [35;1m|[0m                 />
+ [2m286[0m | [35;1m|[0m                 
+ [2m287[0m | [35;1m|[0m                 <div>
+ [2m288[0m | [35;1m|[0m                   <label className="block text-sm font-medium text-gray-700 mb-1">
+ [2m289[0m | [35;1m|[0m                     Select File
+ [2m290[0m | [35;1m|[0m                   </label>
+ [2m291[0m | [35;1m|[0m                   <input
+ [2m292[0m | [35;1m|[0m                     type="file"
+ [2m293[0m | [35;1m|[0m                     onChange={(e) => setUploadData(prev => ({ ...prev, file: e.target.files[0] }))}
+ [2m294[0m | [35;1m|[0m                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
+ [2m295[0m | [35;1m|[0m                     required
+ [2m296[0m | [35;1m|[0m                   />
+ [2m297[0m | [35;1m|[0m                 </div>
+ [2m298[0m | [35;1m|[0m   
+ [2m299[0m | [35;1m|[0m                 <div className="flex justify-end space-x-3 pt-4">
+ [2m300[0m | [35;1m|[0m                   <Button
+ [2m301[0m | [35;1m|[0m                     type="button"
+ [2m302[0m | [35;1m|[0m                     variant="outline"
+ [2m303[0m | [35;1m|[0m                     onClick={() => setShowUploadModal(false)}
+ [2m304[0m | [35;1m|[0m                   >
+ [2m305[0m | [35;1m|[0m                     Cancel
+ [2m306[0m | [35;1m|[0m                   </Button>
+ [2m307[0m | [35;1m|[0m                   <Button type="submit" disabled={loading}>
+ [2m308[0m | [35;1m|[0m                     {loading ? 'Uploading...' : 'Upload'}
+ [2m309[0m | [35;1m|[0m                   </Button>
+ [2m310[0m | [35;1m|[0m                 </div>
+ [2m311[0m | [35;1m|[0m               </form>
+ [2m312[0m | [35;1m|[0m             </div>
+ [2m313[0m | [35;1m|[0m           </Modal>
+ [2m314[0m | [35;1m|[0m         )}
+ [2m315[0m | [35;1m|[0m       </div>
+ [2m316[0m | [35;1m`[0m[35;1m-[0m[35;1m>[0m   );
+ [2m317[0m |     }
+     `----
+  [31mx[0m Expression expected
+     ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:317:1]
+ [2m314[0m |       )}
+ [2m315[0m |     </div>
+ [2m316[0m |   );
+ [2m317[0m | }
+     : [35;1m^[0m
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/PackageDetailView.js
+./app/page.js
+ GET /installHook.js.map 500 in 24ms
+ ⨯ ./components/PackageDetailView.js
+Error:   [31mx[0m await isn't allowed in non-async function
+    ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:80:1]
+ [2m77[0m |         packageId: packageData.id
+ [2m78[0m |       };
+ [2m79[0m |       
+ [2m80[0m |       await apiService.uploadDocument(packageData.id, documentData);
+    : [35;1m      ^^^^^[0m
+ [2m81[0m |       
+ [2m82[0m |       const updatedPackage = {
+ [2m83[0m |         ...packageData,
+    `----
+  [31mx[0m Return statement is not allowed here
+     ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:106:1]
+ [2m103[0m |         return variants[status] || 'default';
+ [2m104[0m |       };
+ [2m105[0m |     
+ [2m106[0m | [35;1m,[0m[35;1m-[0m[35;1m>[0m   return (
+ [2m107[0m | [35;1m|[0m       <div className="min-h-screen bg-gray-50">
+ [2m108[0m | [35;1m|[0m         {/* Header */}
+ [2m109[0m | [35;1m|[0m         <header className="bg-white shadow-sm border-b">
+ [2m110[0m | [35;1m|[0m           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+ [2m111[0m | [35;1m|[0m             <div className="flex items-center h-16">
+ [2m112[0m | [35;1m|[0m               <Button variant="outline" onClick={onBack} className="mr-4">
+ [2m113[0m | [35;1m|[0m                 <ArrowLeft className="h-4 w-4 mr-2" />
+ [2m114[0m | [35;1m|[0m                 Back to Dashboard
+ [2m115[0m | [35;1m|[0m               </Button>
+ [2m116[0m | [35;1m|[0m               <h1 className="text-2xl font-bold text-gray-900">Package Details</h1>
+ [2m117[0m | [35;1m|[0m             </div>
+ [2m118[0m | [35;1m|[0m           </div>
+ [2m119[0m | [35;1m|[0m         </header>
+ [2m120[0m | [35;1m|[0m   
+ [2m121[0m | [35;1m|[0m         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+ [2m122[0m | [35;1m|[0m           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+ [2m123[0m | [35;1m|[0m             {/* Main Content */}
+ [2m124[0m | [35;1m|[0m             <div className="lg:col-span-2 space-y-6">
+ [2m125[0m | [35;1m|[0m               {/* Package Information */}
+ [2m126[0m | [35;1m|[0m               <Card>
+ [2m127[0m | [35;1m|[0m                 <CardHeader>
+ [2m128[0m | [35;1m|[0m                   <div className="flex justify-between items-center">
+ [2m129[0m | [35;1m|[0m                     <h2 className="text-lg font-semibold text-gray-900">Package Information</h2>
+ [2m130[0m | [35;1m|[0m                     <Badge variant={getStatusVariant(packageData.status)}>
+ [2m131[0m | [35;1m|[0m                       {packageData.status}
+ [2m132[0m | [35;1m|[0m                     </Badge>
+ [2m133[0m | [35;1m|[0m                   </div>
+ [2m134[0m | [35;1m|[0m                 </CardHeader>
+ [2m135[0m | [35;1m|[0m                 <CardContent>
+ [2m136[0m | [35;1m|[0m                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+ [2m137[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m138[0m | [35;1m|[0m                       <User className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m139[0m | [35;1m|[0m                       <div>
+ [2m140[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Customer Name</p>
+ [2m141[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.customerName}</p>
+ [2m142[0m | [35;1m|[0m                       </div>
+ [2m143[0m | [35;1m|[0m                     </div>
+ [2m144[0m | [35;1m|[0m                     
+ [2m145[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m146[0m | [35;1m|[0m                       <MapPin className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m147[0m | [35;1m|[0m                       <div>
+ [2m148[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Property Address</p>
+ [2m149[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.propertyAddress}</p>
+ [2m150[0m | [35;1m|[0m                       </div>
+ [2m151[0m | [35;1m|[0m                     </div>
+ [2m152[0m | [35;1m|[0m                     
+ [2m153[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m154[0m | [35;1m|[0m                       <div className="h-5 w-5 bg-primary-100 rounded mt-0.5 flex items-center justify-center">
+ [2m155[0m | [35;1m|[0m                         <div className="h-2 w-2 bg-primary-600 rounded"></div>
+ [2m156[0m | [35;1m|[0m                       </div>
+ [2m157[0m | [35;1m|[0m                       <div>
+ [2m158[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">County</p>
+ [2m159[0m | [35;1m|[0m                         <p className="text-base text-gray-900">{packageData.county}</p>
+ [2m160[0m | [35;1m|[0m                       </div>
+ [2m161[0m | [35;1m|[0m                     </div>
+ [2m162[0m | [35;1m|[0m                     
+ [2m163[0m | [35;1m|[0m                     <div className="flex items-start space-x-3">
+ [2m164[0m | [35;1m|[0m                       <Calendar className="h-5 w-5 text-gray-400 mt-0.5" />
+ [2m165[0m | [35;1m|[0m                       <div>
+ [2m166[0m | [35;1m|[0m                         <p className="text-sm font-medium text-gray-500">Created Date</p>
+ [2m167[0m | [35;1m|[0m                         <p className="text-base text-gray-900">
+ [2m168[0m | [35;1m|[0m                           {new Date(packageData.createdAt).toLocaleDateString()}
+ [2m169[0m | [35;1m|[0m                         </p>
+ [2m170[0m | [35;1m|[0m                       </div>
+ [2m171[0m | [35;1m|[0m                     </div>
+ [2m172[0m | [35;1m|[0m                   </div>
+ [2m173[0m | [35;1m|[0m                 </CardContent>
+ [2m174[0m | [35;1m|[0m               </Card>
+ [2m175[0m | [35;1m|[0m   
+ [2m176[0m | [35;1m|[0m               {/* Documents */}
+ [2m177[0m | [35;1m|[0m               <Card>
+ [2m178[0m | [35;1m|[0m                 <CardHeader>
+ [2m179[0m | [35;1m|[0m                   <div className="flex justify-between items-center">
+ [2m180[0m | [35;1m|[0m                     <h2 className="text-lg font-semibold text-gray-900">Documents</h2>
+ [2m181[0m | [35;1m|[0m                     <div className="flex space-x-2">
+ [2m182[0m | [35;1m|[0m                       {packageData.documents && packageData.documents.length > 0 && (
+ [2m183[0m | [35;1m|[0m                         <Button 
+ [2m184[0m | [35;1m|[0m                           variant="outline" 
+ [2m185[0m | [35;1m|[0m                           onClick={handleDownloadAll}
+ [2m186[0m | [35;1m|[0m                           disabled={loading}
+ [2m187[0m | [35;1m|[0m                         >
+ [2m188[0m | [35;1m|[0m                           <Download className="h-4 w-4 mr-2" />
+ [2m189[0m | [35;1m|[0m                           {loading ? 'Preparing...' : 'Download All'}
+ [2m190[0m | [35;1m|[0m                         </Button>
+ [2m191[0m | [35;1m|[0m                       )}
+ [2m192[0m | [35;1m|[0m                       <Button onClick={() => setShowUploadModal(true)}>
+ [2m193[0m | [35;1m|[0m                         <Upload className="h-4 w-4 mr-2" />
+ [2m194[0m | [35;1m|[0m                         Upload Document
+ [2m195[0m | [35;1m|[0m                       </Button>
+ [2m196[0m | [35;1m|[0m                     </div>
+ [2m197[0m | [35;1m|[0m                   </div>
+ [2m198[0m | [35;1m|[0m                 </CardHeader>
+ [2m199[0m | [35;1m|[0m                 <CardContent>
+ [2m200[0m | [35;1m|[0m                   {packageData.documents && packageData.documents.length > 0 ? (
+ [2m201[0m | [35;1m|[0m                     <div className="space-y-3">
+ [2m202[0m | [35;1m|[0m                       {packageData.documents.map((doc, index) => (
+ [2m203[0m | [35;1m|[0m                         <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+ [2m204[0m | [35;1m|[0m                           <div className="flex items-center space-x-3">
+ [2m205[0m | [35;1m|[0m                             <FileText className="h-5 w-5 text-gray-400" />
+ [2m206[0m | [35;1m|[0m                             <span className="text-sm font-medium text-gray-900">{doc.name}</span>
+ [2m207[0m | [35;1m|[0m                           </div>
+ [2m208[0m | [35;1m|[0m                           <Button variant="outline" size="sm">
+ [2m209[0m | [35;1m|[0m                             View
+ [2m210[0m | [35;1m|[0m                           </Button>
+ [2m211[0m | [35;1m|[0m                         </div>
+ [2m212[0m | [35;1m|[0m                       ))}
+ [2m213[0m | [35;1m|[0m                     </div>
+ [2m214[0m | [35;1m|[0m                   ) : (
+ [2m215[0m | [35;1m|[0m                     <div className="text-center py-8">
+ [2m216[0m | [35;1m|[0m                       <FileText className="mx-auto h-12 w-12 text-gray-400" />
+ [2m217[0m | [35;1m|[0m                       <h3 className="mt-2 text-sm font-medium text-gray-900">No documents uploaded</h3>
+ [2m218[0m | [35;1m|[0m                       <p className="mt-1 text-sm text-gray-500">Upload your first document to get started.</p>
+ [2m219[0m | [35;1m|[0m                     </div>
+ [2m220[0m | [35;1m|[0m                   )}
+ [2m221[0m | [35;1m|[0m                 </CardContent>
+ [2m222[0m | [35;1m|[0m               </Card>
+ [2m223[0m | [35;1m|[0m             </div>
+ [2m224[0m | [35;1m|[0m   
+ [2m225[0m | [35;1m|[0m             {/* Sidebar */}
+ [2m226[0m | [35;1m|[0m             <div className="space-y-6">
+ [2m227[0m | [35;1m|[0m               {/* Status Management */}
+ [2m228[0m | [35;1m|[0m               <Card>
+ [2m229[0m | [35;1m|[0m                 <CardHeader>
+ [2m230[0m | [35;1m|[0m                   <h3 className="text-lg font-semibold text-gray-900">Status Management</h3>
+ [2m231[0m | [35;1m|[0m                 </CardHeader>
+ [2m232[0m | [35;1m|[0m                 <CardContent>
+ [2m233[0m | [35;1m|[0m                   <div className="space-y-3">
+ [2m234[0m | [35;1m|[0m                     {['Draft', 'Submitted', 'Completed'].map((status) => (
+ [2m235[0m | [35;1m|[0m                       <Button
+ [2m236[0m | [35;1m|[0m                         key={status}
+ [2m237[0m | [35;1m|[0m                         variant={packageData.status === status ? 'primary' : 'outline'}
+ [2m238[0m | [35;1m|[0m                         className="w-full justify-start"
+ [2m239[0m | [35;1m|[0m                         onClick={() => handleStatusChange(status)}
+ [2m240[0m | [35;1m|[0m                         disabled={loading}
+ [2m241[0m | [35;1m|[0m                       >
+ [2m242[0m | [35;1m|[0m                         {status}
+ [2m243[0m | [35;1m|[0m                       </Button>
+ [2m244[0m | [35;1m|[0m                     ))}
+ [2m245[0m | [35;1m|[0m                   </div>
+ [2m246[0m | [35;1m|[0m                 </CardContent>
+ [2m247[0m | [35;1m|[0m               </Card>
+ [2m248[0m | [35;1m|[0m   
+ [2m249[0m | [35;1m|[0m               {/* Quick Actions */}
+ [2m250[0m | [35;1m|[0m               <Card>
+ [2m251[0m | [35;1m|[0m                 <CardHeader>
+ [2m252[0m | [35;1m|[0m                   <h3 className="text-lg font-semibold text-gray-900">Quick Actions</h3>
+ [2m253[0m | [35;1m|[0m                 </CardHeader>
+ [2m254[0m | [35;1m|[0m                 <CardContent>
+ [2m255[0m | [35;1m|[0m                   <div className="space-y-3">
+ [2m256[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m257[0m | [35;1m|[0m                       Generate Report
+ [2m258[0m | [35;1m|[0m                     </Button>
+ [2m259[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m260[0m | [35;1m|[0m                       Send Notification
+ [2m261[0m | [35;1m|[0m                     </Button>
+ [2m262[0m | [35;1m|[0m                     <Button variant="outline" className="w-full justify-start">
+ [2m263[0m | [35;1m|[0m                       Export Data
+ [2m264[0m | [35;1m|[0m                     </Button>
+ [2m265[0m | [35;1m|[0m                   </div>
+ [2m266[0m | [35;1m|[0m                 </CardContent>
+ [2m267[0m | [35;1m|[0m               </Card>
+ [2m268[0m | [35;1m|[0m             </div>
+ [2m269[0m | [35;1m|[0m           </div>
+ [2m270[0m | [35;1m|[0m         </div>
+ [2m271[0m | [35;1m|[0m   
+ [2m272[0m | [35;1m|[0m         {/* Upload Document Modal */}
+ [2m273[0m | [35;1m|[0m         {showUploadModal && (
+ [2m274[0m | [35;1m|[0m           <Modal onClose={() => setShowUploadModal(false)}>
+ [2m275[0m | [35;1m|[0m             <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+ [2m276[0m | [35;1m|[0m               <div className="px-6 py-4 border-b border-gray-200">
+ [2m277[0m | [35;1m|[0m                 <h3 className="text-lg font-medium text-gray-900">Upload Document</h3>
+ [2m278[0m | [35;1m|[0m               </div>
+ [2m279[0m | [35;1m|[0m               <form onSubmit={handleUploadDocument} className="p-6 space-y-4">
+ [2m280[0m | [35;1m|[0m                 <Input
+ [2m281[0m | [35;1m|[0m                   label="Document Name"
+ [2m282[0m | [35;1m|[0m                   value={uploadData.name}
+ [2m283[0m | [35;1m|[0m                   onChange={(e) => setUploadData(prev => ({ ...prev, name: e.target.value }))}
+ [2m284[0m | [35;1m|[0m                   placeholder="Enter document name"
+ [2m285[0m | [35;1m|[0m                 />
+ [2m286[0m | [35;1m|[0m                 
+ [2m287[0m | [35;1m|[0m                 <div>
+ [2m288[0m | [35;1m|[0m                   <label className="block text-sm font-medium text-gray-700 mb-1">
+ [2m289[0m | [35;1m|[0m                     Select File
+ [2m290[0m | [35;1m|[0m                   </label>
+ [2m291[0m | [35;1m|[0m                   <input
+ [2m292[0m | [35;1m|[0m                     type="file"
+ [2m293[0m | [35;1m|[0m                     onChange={(e) => setUploadData(prev => ({ ...prev, file: e.target.files[0] }))}
+ [2m294[0m | [35;1m|[0m                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
+ [2m295[0m | [35;1m|[0m                     required
+ [2m296[0m | [35;1m|[0m                   />
+ [2m297[0m | [35;1m|[0m                 </div>
+ [2m298[0m | [35;1m|[0m   
+ [2m299[0m | [35;1m|[0m                 <div className="flex justify-end space-x-3 pt-4">
+ [2m300[0m | [35;1m|[0m                   <Button
+ [2m301[0m | [35;1m|[0m                     type="button"
+ [2m302[0m | [35;1m|[0m                     variant="outline"
+ [2m303[0m | [35;1m|[0m                     onClick={() => setShowUploadModal(false)}
+ [2m304[0m | [35;1m|[0m                   >
+ [2m305[0m | [35;1m|[0m                     Cancel
+ [2m306[0m | [35;1m|[0m                   </Button>
+ [2m307[0m | [35;1m|[0m                   <Button type="submit" disabled={loading}>
+ [2m308[0m | [35;1m|[0m                     {loading ? 'Uploading...' : 'Upload'}
+ [2m309[0m | [35;1m|[0m                   </Button>
+ [2m310[0m | [35;1m|[0m                 </div>
+ [2m311[0m | [35;1m|[0m               </form>
+ [2m312[0m | [35;1m|[0m             </div>
+ [2m313[0m | [35;1m|[0m           </Modal>
+ [2m314[0m | [35;1m|[0m         )}
+ [2m315[0m | [35;1m|[0m       </div>
+ [2m316[0m | [35;1m`[0m[35;1m-[0m[35;1m>[0m   );
+ [2m317[0m |     }
+     `----
+  [31mx[0m Expression expected
+     ,-[[36;1;4m/home/archie/codebase/permitpro/components/PackageDetailView.js[0m:317:1]
+ [2m314[0m |       )}
+ [2m315[0m |     </div>
+ [2m316[0m |   );
+ [2m317[0m | }
+     : [35;1m^[0m
+     `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./components/PackageDetailView.js
+./app/page.js
+ GET / 500 in 35ms
+ GET /installHook.js.map 500 in 28ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled /_error in 2.2s (923 modules)
+ GET / 200 in 1289ms
+ GET /installHook.js.map 404 in 97ms
+ GET /apple-touch-icon.png 404 in 227ms
+ GET /apple-touch-icon-precomposed.png 404 in 237ms
+ GET / 200 in 262ms
+ GET / 200 in 84ms
+ ⚠ Cross origin request detected from 10.0.8.54 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+[?25h

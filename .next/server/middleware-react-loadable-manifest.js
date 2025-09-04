@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"components/PackageDetailView.js -> jszip":{"id":7496,"files":["static/chunks/496.6561c8ff55fb0785.js"]}}';

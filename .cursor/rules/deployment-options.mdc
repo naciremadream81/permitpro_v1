@@ -1,0 +1,19 @@
+deploymentOptions:
+  description: When the application is ready for deployment, always provide three options: AWS Free Tier, Google Cloud Free Tier, and Linode (budget/cheap).
+  options:
+    - name: AWS Free Tier
+      provider: aws
+      tier: free
+      description: Deploy using Amazon Web Services Free Tier for eligible resources.
+    - name: Google Cloud Free Tier
+      provider: google-cloud
+      tier: free
+      description: Deploy using Google Cloud Platform Free Tier for eligible resources.
+    - name: Linode Budget
+      provider: linode
+      tier: budget
+      description: Deploy using Linode's cheapest plan for budget-friendly hosting.
+description:
+globs:
+alwaysApply: true
+---
