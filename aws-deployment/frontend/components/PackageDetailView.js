@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Card, CardHeader, CardContent, Button, Badge, Modal, Input } from './ui';
-import { ArrowLeft, Upload, Download, FileText, Calendar, MapPin, User } from 'lucide-react';
+import { ArrowLeft, Upload, Download, FileText, Calendar, MapPin, User, Archive, FileBarChart } from 'lucide-react';
 import { apiService } from '../lib/api';
 
 export default function PackageDetailView({ 
@@ -13,6 +13,30 @@ export default function PackageDetailView({
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [uploadData, setUploadData] = useState({ name: '', file: null });
   const [loading, setLoading] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  const [generatingReport, setGeneratingReport] = useState(false);
+
+  // Debug logging
+  console.log('PackageDetailView - packageData:', packageData);
+  console.log('PackageDetailView - contractors:', packageData?.contractors);
+  console.log('PackageDetailView - checklistItems:', packageData?.checklistItems);
+  
+  // Fallback for missing contractors - show legacy contractor data
+  const displayContractors = packageData?.contractors || [];
+  if (displayContractors.length === 0 && packageData?.contractorName) {
+    displayContractors.push({
+      id: 'legacy-primary',
+      name: packageData.contractorName,
+      license: packageData.contractorLicense || '',
+      phone: packageData.contractorPhone || '',
+      email: packageData.contractorEmail || '',
+      role: 'Primary Contractor',
+      specialties: 'General Construction'
+    });
+  }
+  
+  // Fallback for missing checklist - show basic info
+  const displayChecklist = packageData?.checklistItems || [];
 
   const handleStatusChange = async (newStatus) => {
     setLoading(true);
@@ -26,46 +50,154 @@ export default function PackageDetailView({
     }
   };
 
-  const handleDownloadAll = async () => {
-    if (!packageData.documents || packageData.documents.length === 0) {
-      alert('No documents to download');
-      return;
-    }
-
-    setLoading(true);
+  const handleDownloadAllDocuments = async () => {
+    setDownloading(true);
     try {
-      // Create a zip file name based on package info
-      const zipFileName = `${packageData.customerName.replace(/\s+/g, '_')}_${packageData.permitNumber || packageData.id}_Documents.zip`;
+      // Create a zip file with all package documents
+      const JSZip = (await import('jszip')).default;
+      const zip = new JSZip();
       
-      // In a real implementation, you would call an API endpoint that creates a zip file
-      // For now, we'll simulate the download
-      const response = await fetch(`http://localhost:3008/api/packages/${packageData.id}/download-all`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('permitpro_token')}`
-        }
-      });
+      // Add package information as a text file
+      const packageInfo = `
+PERMIT PACKAGE SUBMISSION
+========================
 
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = zipFileName;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      } else {
-        throw new Error('Failed to download documents');
+Package ID: ${packageData.id}
+Permit Number: ${packageData.permitNumber || 'N/A'}
+Customer: ${packageData.customerName}
+Property: ${packageData.propertyAddress}
+County: ${packageData.county}
+Permit Type: ${packageData.permitType}
+Status: ${packageData.status}
+Created: ${new Date(packageData.createdAt).toLocaleString()}
+
+CONTRACTORS
+===========
+${displayContractors.map(contractor => `
+${contractor.role}: ${contractor.name}
+License: ${contractor.license}
+Phone: ${contractor.phone}
+Email: ${contractor.email}
+Specialties: ${contractor.specialties}
+`).join('\n')}
+
+CHECKLIST ITEMS
+==============
+${displayChecklist.map((item, index) => `
+${index + 1}. ${item.description}
+   Status: ${item.completed ? 'Completed' : 'Pending'}
+   ${item.notes ? `Notes: ${item.notes}` : ''}
+`).join('\n')}
+
+DOCUMENTS
+=========
+${packageData.documents?.map(doc => `- ${doc.name} (${doc.type})`).join('\n') || 'No documents uploaded'}
+      `.trim();
+      
+      zip.file('Package_Information.txt', packageInfo);
+      
+      // Add any uploaded documents (if they exist)
+      if (packageData.documents && packageData.documents.length > 0) {
+        const documentsFolder = zip.folder('Documents');
+        packageData.documents.forEach(doc => {
+          // For now, add placeholder files since we don't have actual file data
+          documentsFolder.file(doc.name, `Document: ${doc.name}\nType: ${doc.type}\nUploaded: ${doc.uploadedAt || 'Unknown'}`);
+        });
       }
+      
+      // Generate and download the zip file
+      const content = await zip.generateAsync({ type: 'blob' });
+      const url = window.URL.createObjectURL(content);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `PermitPackage_${packageData.id}_${new Date().toISOString().split('T')[0]}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
     } catch (error) {
-      console.error('Download error:', error);
-      alert('Failed to download documents. Please try again.');
+      console.error('Failed to create zip file:', error);
+      alert('Failed to create download package. Please try again.');
     } finally {
-      setLoading(false);
+      setDownloading(false);
     }
   };
+
+  const handleGenerateReport = async () => {
+    setGeneratingReport(true);
+    try {
+      // Generate a comprehensive report of all packages
+      const reportData = await apiService.getPermits();
+      const packages = reportData.packages || [];
+      
+      const report = `
+PERMIT PRO SYSTEM - COMPREHENSIVE REPORT
+========================================
+
+Generated: ${new Date().toLocaleString()}
+Total Packages: ${packages.length}
+
+PACKAGE SUMMARY
+===============
+${packages.map((pkg, index) => `
+${index + 1}. Package ${pkg.id}
+   Customer: ${pkg.customerName}
+   Property: ${pkg.propertyAddress}
+   County: ${pkg.county}
+   Permit Type: ${pkg.permitType}
+   Status: ${pkg.status}
+   Created: ${new Date(pkg.createdAt).toLocaleString()}
+   ${pkg.contractorName ? `Primary Contractor: ${pkg.contractorName}` : ''}
+`).join('\n')}
+
+STATUS BREAKDOWN
+================
+${Object.entries(
+  packages.reduce((acc, pkg) => {
+    acc[pkg.status] = (acc[pkg.status] || 0) + 1;
+    return acc;
+  }, {})
+).map(([status, count]) => `${status}: ${count} packages`).join('\n')}
+
+COUNTY BREAKDOWN
+================
+${Object.entries(
+  packages.reduce((acc, pkg) => {
+    acc[pkg.county] = (acc[pkg.county] || 0) + 1;
+    return acc;
+  }, {})
+).map(([county, count]) => `${county}: ${count} packages`).join('\n')}
+
+PERMIT TYPE BREAKDOWN
+=====================
+${Object.entries(
+  packages.reduce((acc, pkg) => {
+    acc[pkg.permitType] = (acc[pkg.permitType] || 0) + 1;
+    return acc;
+  }, {})
+).map(([type, count]) => `${type}: ${count} packages`).join('\n')}
+      `.trim();
+      
+      // Create and download the report
+      const blob = new Blob([report], { type: 'text/plain' });
+        const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `PermitPro_Report_${new Date().toISOString().split('T')[0]}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      
+    } catch (error) {
+      console.error('Failed to generate report:', error);
+      alert('Failed to generate report. Please try again.');
+    } finally {
+      setGeneratingReport(false);
+    }
+  };
+
 
   const handleUploadDocument = async (e) => {
     e.preventDefault();
@@ -110,12 +242,32 @@ export default function PackageDetailView({
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
             <Button variant="outline" onClick={onBack} className="mr-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Dashboard
             </Button>
             <h1 className="text-2xl font-bold text-gray-900">Package Details</h1>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Button 
+                onClick={handleDownloadAllDocuments}
+                disabled={downloading}
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                <Archive className="h-4 w-4 mr-2" />
+                {downloading ? 'Creating...' : 'Download All'}
+              </Button>
+              <Button 
+                onClick={handleGenerateReport}
+                disabled={generatingReport}
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
+                <FileBarChart className="h-4 w-4 mr-2" />
+                {generatingReport ? 'Generating...' : 'Generate Report'}
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -184,9 +336,9 @@ export default function PackageDetailView({
                 </h2>
               </CardHeader>
               <CardContent>
-                {packageData.contractors && packageData.contractors.length > 0 ? (
+                {displayContractors && displayContractors.length > 0 ? (
                   <div className="space-y-4">
-                    {packageData.contractors.map((contractor) => (
+                    {displayContractors.map((contractor) => (
                       <div key={contractor.id} className="p-4 bg-gray-50 rounded-lg">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
@@ -224,9 +376,9 @@ export default function PackageDetailView({
                 </h2>
               </CardHeader>
               <CardContent>
-                {packageData.checklist && packageData.checklist.length > 0 ? (
+                {displayChecklist && displayChecklist.length > 0 ? (
                   <div className="space-y-3">
-                    {packageData.checklist.map((item) => (
+                    {displayChecklist.map((item) => (
                       <div key={item.id} className="flex items-start space-x-3 p-4 bg-gray-50 rounded-lg">
                         <div className="flex-shrink-0 mt-1">
                           <div className={`w-5 h-5 border-2 rounded flex items-center justify-center ${

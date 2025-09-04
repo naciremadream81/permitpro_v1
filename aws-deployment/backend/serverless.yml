@@ -41,68 +41,24 @@ plugins:
   - serverless-dotenv-plugin
 
 functions:
-  # Authentication
-  auth:
-    handler: handler.auth
+  # Health check
+  health:
+    handler: handler.health
     events:
       - http:
-          path: /auth/{proxy+}
-          method: ANY
-          cors: true
-
-  # Packages API
-  packages:
-    handler: handler.packages
-    events:
-      - http:
-          path: /packages/{proxy+}
-          method: ANY
-          cors: true
-
-  # Contractors API
-  contractors:
-    handler: handler.contractors
-    events:
-      - http:
-          path: /contractors/{proxy+}
-          method: ANY
-          cors: true
-
-  # Permit Types API
-  permitTypes:
-    handler: handler.permitTypes
-    events:
-      - http:
-          path: /permit-types
+          path: /health
           method: GET
           cors: true
 
-  # Checklist API
-  checklist:
-    handler: handler.checklist
+  # Main API
+  api:
+    handler: handler.api
     events:
       - http:
-          path: /checklist
-          method: GET
-          cors: true
-
-  # Dashboard API
-  dashboard:
-    handler: handler.dashboard
-    events:
-      - http:
-          path: /dashboard/{proxy+}
+          path: /{proxy+}
           method: ANY
           cors: true
 
-  # File Upload
-  upload:
-    handler: handler.upload
-    events:
-      - http:
-          path: /upload
-          method: POST
-          cors: true
 
 resources:
   Resources:

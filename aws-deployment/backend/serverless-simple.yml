@@ -10,29 +10,10 @@ provider:
   
   environment:
     NODE_ENV: ${self:provider.stage}
-    DATABASE_URL: ${env:DATABASE_URL}
-    JWT_SECRET: ${env:JWT_SECRET}
-    JWT_EXPIRES_IN: ${env:JWT_EXPIRES_IN, '7d'}
-    PORT: 3001
-
-plugins:
-  - serverless-offline
-  - serverless-dotenv-plugin
+    JWT_SECRET: permitpro-jwt-secret-key-2024
+    JWT_EXPIRES_IN: '7d'
 
 functions:
-  # Main API handler
-  api:
-    handler: handler.api
-    events:
-      - http:
-          path: /{proxy+}
-          method: ANY
-          cors: true
-      - http:
-          path: /
-          method: ANY
-          cors: true
-
   # Health check
   health:
     handler: handler.health
@@ -41,3 +22,15 @@ functions:
           path: /health
           method: GET
           cors: true
+
+  # Main API
+  api:
+    handler: handler.api
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+
+plugins:
+  - serverless-offline

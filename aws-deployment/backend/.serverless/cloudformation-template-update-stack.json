@@ -168,7 +168,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/permitpro-backend/dev/1756929057747-2025-09-03T19:50:57.747Z/permitpro-backend.zip"
+          "S3Key": "serverless/permitpro-backend/dev/1756958720034-2025-09-04T04:05:20.034Z/permitpro-backend.zip"
         },
         "Handler": "handler.health",
         "Runtime": "nodejs20.x",
@@ -178,7 +178,8 @@
         "Environment": {
           "Variables": {
             "NODE_ENV": "dev",
-            "JWT_SECRET": "your-super-secret-jwt-key"
+            "JWT_SECRET": "permitpro-jwt-secret-key-2024",
+            "JWT_EXPIRES_IN": "7d"
           }
         },
         "Role": {
@@ -199,7 +200,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/permitpro-backend/dev/1756929057747-2025-09-03T19:50:57.747Z/permitpro-backend.zip"
+          "S3Key": "serverless/permitpro-backend/dev/1756958720034-2025-09-04T04:05:20.034Z/permitpro-backend.zip"
         },
         "Handler": "handler.api",
         "Runtime": "nodejs20.x",
@@ -209,7 +210,8 @@
         "Environment": {
           "Variables": {
             "NODE_ENV": "dev",
-            "JWT_SECRET": "your-super-secret-jwt-key"
+            "JWT_SECRET": "permitpro-jwt-secret-key-2024",
+            "JWT_EXPIRES_IN": "7d"
           }
         },
         "Role": {
@@ -223,24 +225,24 @@
         "ApiLogGroup"
       ]
     },
-    "HealthLambdaVersionqGVoo5WLHRFNdB68M6zQb9Hel1IXwcdVQhUmgUuJi8": {
+    "HealthLambdaVersionP4AcpKBPcO7o68Y0szfVpsemSMuWAmeOteckdS6e8": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HealthLambdaFunction"
         },
-        "CodeSha256": "R8BI9GMDgZe7WIaR8dS5/z9qktdUThbAqvXRGVpCLls="
+        "CodeSha256": "gmKMPJ2gFzC1XHZ0VjrPc53lEMuZdwVhfUpYINHjA0o="
       }
     },
-    "ApiLambdaVersiongnEyI1WMGVZSMNkr1jRr2T0uwBdjOU8AUEZapUxc": {
+    "ApiLambdaVersionANqBMZMePOGsFc7YY6ObZjfOYGUWa3vKJ6gRLzejyac": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "ApiLambdaFunction"
         },
-        "CodeSha256": "R8BI9GMDgZe7WIaR8dS5/z9qktdUThbAqvXRGVpCLls="
+        "CodeSha256": "gmKMPJ2gFzC1XHZ0VjrPc53lEMuZdwVhfUpYINHjA0o="
       }
     },
     "ApiGatewayRestApi": {
@@ -375,54 +377,6 @@
         }
       }
     },
-    "ApiGatewayMethodOptions": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "AuthorizationType": "NONE",
-        "HttpMethod": "OPTIONS",
-        "MethodResponses": [
-          {
-            "StatusCode": "200",
-            "ResponseParameters": {
-              "method.response.header.Access-Control-Allow-Origin": true,
-              "method.response.header.Access-Control-Allow-Headers": true,
-              "method.response.header.Access-Control-Allow-Methods": true
-            },
-            "ResponseModels": {}
-          }
-        ],
-        "RequestParameters": {},
-        "Integration": {
-          "Type": "MOCK",
-          "RequestTemplates": {
-            "application/json": "{statusCode:200}"
-          },
-          "ContentHandling": "CONVERT_TO_TEXT",
-          "IntegrationResponses": [
-            {
-              "StatusCode": "200",
-              "ResponseParameters": {
-                "method.response.header.Access-Control-Allow-Origin": "'*'",
-                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-              },
-              "ResponseTemplates": {
-                "application/json": ""
-              }
-            }
-          ]
-        },
-        "ResourceId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        }
-      }
-    },
     "ApiGatewayMethodHealthGet": {
       "Type": "AWS::ApiGateway::Method",
       "Properties": {
@@ -515,56 +469,7 @@
         "ApiLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayMethodAny": {
-      "Type": "AWS::ApiGateway::Method",
-      "Properties": {
-        "HttpMethod": "ANY",
-        "RequestParameters": {},
-        "ResourceId": {
-          "Fn::GetAtt": [
-            "ApiGatewayRestApi",
-            "RootResourceId"
-          ]
-        },
-        "RestApiId": {
-          "Ref": "ApiGatewayRestApi"
-        },
-        "ApiKeyRequired": false,
-        "AuthorizationType": "NONE",
-        "Integration": {
-          "IntegrationHttpMethod": "POST",
-          "Type": "AWS_PROXY",
-          "Uri": {
-            "Fn::Join": [
-              "",
-              [
-                "arn:",
-                {
-                  "Ref": "AWS::Partition"
-                },
-                ":apigateway:",
-                {
-                  "Ref": "AWS::Region"
-                },
-                ":lambda:path/2015-03-31/functions/",
-                {
-                  "Fn::GetAtt": [
-                    "ApiLambdaFunction",
-                    "Arn"
-                  ]
-                },
-                "/invocations"
-              ]
-            ]
-          }
-        },
-        "MethodResponses": []
-      },
-      "DependsOn": [
-        "ApiLambdaPermissionApiGateway"
-      ]
-    },
-    "ApiGatewayDeployment1756929022371": {
+    "ApiGatewayDeployment1756958676695": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -575,10 +480,8 @@
       "DependsOn": [
         "ApiGatewayMethodHealthOptions",
         "ApiGatewayMethodProxyVarOptions",
-        "ApiGatewayMethodOptions",
         "ApiGatewayMethodHealthGet",
-        "ApiGatewayMethodProxyVarAny",
-        "ApiGatewayMethodAny"
+        "ApiGatewayMethodProxyVarAny"
       ]
     },
     "HealthLambdaPermissionApiGateway": {
@@ -668,7 +571,7 @@
     "HealthLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HealthLambdaVersionqGVoo5WLHRFNdB68M6zQb9Hel1IXwcdVQhUmgUuJi8"
+        "Ref": "HealthLambdaVersionP4AcpKBPcO7o68Y0szfVpsemSMuWAmeOteckdS6e8"
       },
       "Export": {
         "Name": "sls-permitpro-backend-dev-HealthLambdaFunctionQualifiedArn"
@@ -677,7 +580,7 @@
     "ApiLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "ApiLambdaVersiongnEyI1WMGVZSMNkr1jRr2T0uwBdjOU8AUEZapUxc"
+        "Ref": "ApiLambdaVersionANqBMZMePOGsFc7YY6ObZjfOYGUWa3vKJ6gRLzejyac"
       },
       "Export": {
         "Name": "sls-permitpro-backend-dev-ApiLambdaFunctionQualifiedArn"

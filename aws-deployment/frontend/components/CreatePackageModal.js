@@ -50,13 +50,7 @@ export default function CreatePackageModal({ isOpen, onClose, onPackageCreated }
 
   const loadPermitTypes = async () => {
     try {
-      const token = localStorage.getItem('permitpro_token');
-      const response = await fetch('http://localhost:3008/api/permit-types', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      const types = await response.json();
+      const types = await apiService.getPermitTypes();
       setPermitTypes(types);
     } catch (error) {
       console.error('Failed to load permit types:', error);
@@ -65,13 +59,42 @@ export default function CreatePackageModal({ isOpen, onClose, onPackageCreated }
 
   const loadContractors = async () => {
     try {
-      const token = localStorage.getItem('permitpro_token');
-      const response = await fetch('http://localhost:3008/api/contractors', {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      // For now, we'll use mock contractors since the backend doesn't have a contractors endpoint
+      // In a real implementation, this would be: const contractorData = await apiService.getContractors();
+      const contractorData = [
+        {
+          id: '1',
+          name: 'ABC Construction LLC',
+          license: 'CBC1234567',
+          phone: '(305) 555-0456',
+          email: 'contact@abcconstruction.com',
+          specialties: 'General Construction, Renovations'
+        },
+        {
+          id: '2',
+          name: 'XYZ Builders Inc',
+          license: 'CBC7654321',
+          phone: '(407) 555-0321',
+          email: 'info@xyzbuilders.com',
+          specialties: 'Residential Construction, Additions'
+        },
+        {
+          id: '3',
+          name: 'Elite Electrical Services',
+          license: 'EC123456',
+          phone: '(305) 555-0101',
+          email: 'info@eliteelectrical.com',
+          specialties: 'Electrical, HVAC'
+        },
+        {
+          id: '4',
+          name: 'Premier Plumbing Co',
+          license: 'PC789012',
+          phone: '(305) 555-0202',
+          email: 'info@premierplumbing.com',
+          specialties: 'Plumbing, Water Systems'
         }
-      });
-      const contractorData = await response.json();
+      ];
       setContractors(contractorData);
     } catch (error) {
       console.error('Failed to load contractors:', error);
@@ -86,13 +109,9 @@ export default function CreatePackageModal({ isOpen, onClose, onPackageCreated }
 
     setLoadingChecklist(true);
     try {
-      const token = localStorage.getItem('permitpro_token');
-      const response = await fetch(`http://localhost:3008/api/checklist?county=${encodeURIComponent(county)}&permitType=${encodeURIComponent(permitType)}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      const checklistData = await response.json();
+      // For now, we'll create a mock checklist based on permit type
+      // In a real implementation, this would come from the backend
+      const checklistData = getChecklistForPermitType(permitType);
       setChecklist(checklistData);
     } catch (error) {
       console.error('Failed to load checklist:', error);
@@ -102,48 +121,107 @@ export default function CreatePackageModal({ isOpen, onClose, onPackageCreated }
     }
   };
 
+  const getChecklistForPermitType = (permitType) => {
+    const checklists = {
+      'mobile-home': [
+        { title: 'Site plan approval', description: 'Submit site plan for review', required: true },
+        { title: 'Foundation inspection', description: 'Schedule foundation inspection', required: true },
+        { title: 'Electrical hookup verification', description: 'Verify electrical connections', required: true },
+        { title: 'Plumbing connections check', description: 'Check plumbing connections', required: true },
+        { title: 'Tie-down system inspection', description: 'Inspect tie-down system', required: true },
+        { title: 'Final occupancy inspection', description: 'Final inspection for occupancy', required: true }
+      ],
+      'modular-home': [
+        { title: 'Foundation permit', description: 'Obtain foundation permit', required: true },
+        { title: 'Modular unit delivery approval', description: 'Approve modular unit delivery', required: true },
+        { title: 'Electrical rough-in inspection', description: 'Electrical rough-in inspection', required: true },
+        { title: 'Plumbing rough-in inspection', description: 'Plumbing rough-in inspection', required: true },
+        { title: 'HVAC installation check', description: 'Check HVAC installation', required: true },
+        { title: 'Final building inspection', description: 'Final building inspection', required: true },
+        { title: 'Certificate of occupancy', description: 'Obtain certificate of occupancy', required: true }
+      ],
+      'shed': [
+        { title: 'Setback requirements verification', description: 'Verify setback requirements', required: true },
+        { title: 'Foundation/slab inspection', description: 'Inspect foundation or slab', required: true },
+        { title: 'Structural framing check', description: 'Check structural framing', required: true },
+        { title: 'Roofing inspection', description: 'Inspect roofing', required: true },
+        { title: 'Final inspection', description: 'Final inspection', required: true }
+      ],
+      'addition': [
+        { title: 'Building permit application', description: 'Submit building permit application', required: true },
+        { title: 'Structural plans review', description: 'Review structural plans', required: true },
+        { title: 'Foundation inspection', description: 'Foundation inspection', required: true },
+        { title: 'Framing inspection', description: 'Framing inspection', required: true },
+        { title: 'Electrical rough-in', description: 'Electrical rough-in inspection', required: true },
+        { title: 'Plumbing rough-in', description: 'Plumbing rough-in inspection', required: true },
+        { title: 'Insulation inspection', description: 'Insulation inspection', required: true },
+        { title: 'Drywall inspection', description: 'Drywall inspection', required: true },
+        { title: 'Final inspection', description: 'Final inspection', required: true }
+      ],
+      'hvac': [
+        { title: 'HVAC system design review', description: 'Review HVAC system design', required: true },
+        { title: 'Ductwork installation inspection', description: 'Inspect ductwork installation', required: true },
+        { title: 'Equipment mounting verification', description: 'Verify equipment mounting', required: true },
+        { title: 'Electrical connections check', description: 'Check electrical connections', required: true },
+        { title: 'Gas line connections (if applicable)', description: 'Check gas line connections', required: false },
+        { title: 'System startup and testing', description: 'Test system startup', required: true },
+        { title: 'Final inspection and approval', description: 'Final inspection and approval', required: true }
+      ],
+      'electrical': [
+        { title: 'Electrical plans review', description: 'Review electrical plans', required: true },
+        { title: 'Rough-in electrical inspection', description: 'Rough-in electrical inspection', required: true },
+        { title: 'Panel installation verification', description: 'Verify panel installation', required: true },
+        { title: 'Outlet and switch installation', description: 'Install outlets and switches', required: true },
+        { title: 'GFCI and AFCI compliance check', description: 'Check GFCI and AFCI compliance', required: true },
+        { title: 'Final electrical inspection', description: 'Final electrical inspection', required: true },
+        { title: 'Certificate of completion', description: 'Obtain certificate of completion', required: true }
+      ],
+      'plumbing': [
+        { title: 'Plumbing plans review', description: 'Review plumbing plans', required: true },
+        { title: 'Rough-in plumbing inspection', description: 'Rough-in plumbing inspection', required: true },
+        { title: 'Water line installation', description: 'Install water lines', required: true },
+        { title: 'Drain line installation', description: 'Install drain lines', required: true },
+        { title: 'Fixture installation verification', description: 'Verify fixture installation', required: true },
+        { title: 'Pressure testing', description: 'Perform pressure testing', required: true },
+        { title: 'Final plumbing inspection', description: 'Final plumbing inspection', required: true }
+      ]
+    };
+    
+    return checklists[permitType] || [];
+  };
+
   const handleAddNewContractor = async () => {
     if (!formData.newContractorName || !formData.newContractorLicense) {
       return;
     }
 
     try {
-      const token = localStorage.getItem('permitpro_token');
-      const response = await fetch('http://localhost:3008/api/contractors', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          name: formData.newContractorName,
-          license: formData.newContractorLicense,
-          phone: formData.newContractorPhone,
-          email: formData.newContractorEmail,
-          address: formData.newContractorAddress,
-          specialties: formData.newContractorSpecialties
-        })
-      });
-
-      if (response.ok) {
-        const newContractor = await response.json();
-        setContractors(prev => [...prev, newContractor]);
-        
-        // Clear the form
-        setFormData(prev => ({
-          ...prev,
-          newContractorName: '',
-          newContractorLicense: '',
-          newContractorPhone: '',
-          newContractorEmail: '',
-          newContractorAddress: '',
-          newContractorSpecialties: ''
-        }));
-        
-        setShowNewContractorForm(false);
-      } else {
-        console.error('Failed to add contractor');
-      }
+      // Create a new contractor object locally
+      const newContractor = {
+        id: Date.now().toString(), // Generate a simple ID
+        name: formData.newContractorName,
+        license: formData.newContractorLicense,
+        phone: formData.newContractorPhone || '',
+        email: formData.newContractorEmail || '',
+        address: formData.newContractorAddress || '',
+        specialties: formData.newContractorSpecialties || ''
+      };
+      
+      // Add to the local contractors list
+      setContractors(prev => [...prev, newContractor]);
+      
+      // Clear the form
+      setFormData(prev => ({
+        ...prev,
+        newContractorName: '',
+        newContractorLicense: '',
+        newContractorPhone: '',
+        newContractorEmail: '',
+        newContractorAddress: '',
+        newContractorSpecialties: ''
+      }));
+      
+      setShowNewContractorForm(false);
     } catch (error) {
       console.error('Error adding contractor:', error);
     }
@@ -174,13 +252,26 @@ export default function CreatePackageModal({ isOpen, onClose, onPackageCreated }
     setError('');
 
     try {
-      // Prepare package data with contractors and checklist
+      // Get contractor details for primary contractor
+      const primaryContractor = contractors.find(c => c.id === formData.primaryContractorId);
+      const subcontractors = contractors.filter(c => formData.subcontractorIds.includes(c.id));
+      
+      // Prepare package data with contractor details
       const packageData = {
         ...formData,
-        contractors: {
-          primary: formData.primaryContractorId,
-          subcontractors: formData.subcontractorIds
-        },
+        // Primary contractor details
+        contractorName: primaryContractor?.name || '',
+        contractorLicense: primaryContractor?.license || '',
+        contractorPhone: primaryContractor?.phone || '',
+        contractorEmail: primaryContractor?.email || '',
+        // Subcontractor details (we'll store as a string for now)
+        subcontractors: subcontractors.map(sub => ({
+          name: sub.name,
+          license: sub.license,
+          phone: sub.phone,
+          email: sub.email,
+          specialties: sub.specialties
+        })),
         checklist: checklist
       };
 
@@ -464,7 +555,7 @@ export default function CreatePackageModal({ isOpen, onClose, onPackageCreated }
                 >
                   <option value="">Select Permit Type</option>
                   {permitTypes.map(type => (
-                    <option key={type.id} value={type.id}>{type.name}</option>
+                    <option key={type.value} value={type.value}>{type.label}</option>
                   ))}
                 </select>
               </div>
@@ -477,7 +568,7 @@ export default function CreatePackageModal({ isOpen, onClose, onPackageCreated }
               <h3 className="text-lg font-medium text-gray-900 mb-4">Required Documents & Checklist</h3>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                 <p className="text-sm text-blue-800">
-                  <strong>County:</strong> {formData.county} | <strong>Permit Type:</strong> {permitTypes.find(t => t.id === formData.permitType)?.name}
+                  <strong>County:</strong> {formData.county} | <strong>Permit Type:</strong> {permitTypes.find(t => t.value === formData.permitType)?.label}
                 </p>
               </div>
               

@@ -1,7 +1,7 @@
 // API service for permit management
 class ApiService {
   constructor() {
-    this.baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://ay4flwsge9.execute-api.us-east-1.amazonaws.com/dev/api';
+    this.baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://permitpro-463203.uk.r.appspot.com/api';
   }
 
   getToken() {
@@ -76,28 +76,33 @@ class ApiService {
 
   // Permit packages
   async getPermits() {
-    return this.request('/packages');
+    return this.request('/permits');
   }
 
   async createPermit(packageData) {
-    return this.request('/packages', {
+    return this.request('/permits', {
       method: 'POST',
       body: JSON.stringify(packageData),
     });
   }
 
   async updatePackageStatus(packageId, status) {
-    return this.request(`/packages/${packageId}/status`, {
-      method: 'PUT',
+    return this.request(`/permits/${packageId}/status`, {
+      method: 'PATCH',
       body: JSON.stringify({ status }),
     });
   }
 
   async uploadDocument(packageId, documentData) {
-    return this.request(`/packages/${packageId}/documents`, {
+    return this.request(`/permits/${packageId}/documents`, {
       method: 'POST',
       body: JSON.stringify(documentData),
     });
+  }
+
+  // Get permit types
+  async getPermitTypes() {
+    return this.request('/permit-types');
   }
 
   // Dashboard stats

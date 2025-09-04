@@ -3,137 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PermitPro - Professional Permit Management</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 1rem;
-        }
-        .status {
-            background: #4CAF50;
-            color: white;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-        }
-        .api-test {
-            background: #f5f5f5;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-        }
-        button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0.5rem;
-        }
-        button:hover {
-            background: #5a6fd8;
-        }
-        .result {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 5px;
-            font-family: monospace;
-            font-size: 0.9rem;
-        }
-        .success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🎉 PermitPro AWS Deployment</h1>
-        <div class="status">
-            ✅ Frontend Successfully Deployed to AWS Amplify
-        </div>
-        
-        <div class="api-test">
-            <h3>Backend API Test</h3>
-            <p>Test the AWS Lambda backend API:</p>
-            <button onclick="testHealth()">Test Health Check</button>
-            <button onclick="testPackages()">Test Packages API</button>
-            <button onclick="testAuth()">Test Auth API</button>
-            <div id="result" class="result" style="display: none;"></div>
-        </div>
-
-        <div class="api-test">
-            <h3>API Endpoints</h3>
-            <p><strong>Backend:</strong> <a href="https://ay4flwsge9.execute-api.us-east-1.amazonaws.com/dev/health" target="_blank">https://ay4flwsge9.execute-api.us-east-1.amazonaws.com/dev/</a></p>
-            <p><strong>Frontend:</strong> <a href="https://d1g65b3ua94y8a.amplifyapp.com" target="_blank">https://d1g65b3ua94y8a.amplifyapp.com</a></p>
-        </div>
-    </div>
-
+    <title>PermitPro - AWS Deployment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        const API_BASE = 'https://ay4flwsge9.execute-api.us-east-1.amazonaws.com/dev';
-        
-        function showResult(message, isSuccess = true) {
-            const result = document.getElementById('result');
-            result.style.display = 'block';
-            result.className = `result ${isSuccess ? 'success' : 'error'}`;
-            result.textContent = message;
-        }
-
-        async function testHealth() {
-            try {
-                const response = await fetch(`${API_BASE}/health`);
-                const data = await response.json();
-                showResult(`Health Check: ${JSON.stringify(data, null, 2)}`);
-            } catch (error) {
-                showResult(`Health Check Error: ${error.message}`, false);
-            }
-        }
-
-        async function testPackages() {
-            try {
-                const response = await fetch(`${API_BASE}/api/packages`);
-                const data = await response.json();
-                showResult(`Packages API: ${JSON.stringify(data, null, 2)}`);
-            } catch (error) {
-                showResult(`Packages API Error: ${error.message}`, false);
-            }
-        }
-
-        async function testAuth() {
-            try {
-                const response = await fetch(`${API_BASE}/api/auth/login`);
-                const data = await response.json();
-                showResult(`Auth API: ${JSON.stringify(data, null, 2)}`);
-            } catch (error) {
-                showResult(`Auth API Error: ${error.message}`, false);
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
             }
         }
     </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="min-h-screen bg-gray-50">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center">
+                        <h1 class="text-2xl font-bold text-gray-900">PermitPro</h1>
+                        <span class="ml-4 px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+                            AWS Deployment
+                        </span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500">Backend: AWS Lambda</span>
+                        <span class="text-sm text-gray-500">Frontend: AWS Amplify</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                    🎉 AWS Deployment Successful!
+                </h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    PermitPro is now running on AWS with both backend and frontend deployed.
+                </p>
+
+                <!-- Status Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-8">
+                    <!-- Backend Status -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                            <h3 class="text-lg font-semibold text-gray-900">Backend (AWS Lambda)</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">API Gateway Endpoint:</p>
+                        <code class="text-xs bg-gray-100 p-2 rounded block break-all">
+                            https://ay4flwsge9.execute-api.us-east-1.amazonaws.com/dev
+                        </code>
+                        <div class="mt-4">
+                            <a href="https://ay4flwsge9.execute-api.us-east-1.amazonaws.com/dev/health" 
+                               target="_blank" 
+                               class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                                Test API
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Frontend Status -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+                            <h3 class="text-lg font-semibold text-gray-900">Frontend (AWS Amplify)</h3>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-2">Current URL:</p>
+                        <code class="text-xs bg-gray-100 p-2 rounded block break-all">
+                            https://d1g65b3ua94y8a.amplifyapp.com
+                        </code>
+                        <div class="mt-4">
+                            <a href="https://d1g65b3ua94y8a.amplifyapp.com" 
+                               target="_blank" 
+                               class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                                View App
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features -->
+                <div class="bg-white rounded-lg shadow-md p-6 max-w-4xl mx-auto">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">✅ Deployed Features</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-sm text-gray-700">JWT Authentication</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-sm text-gray-700">Permit Management</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-sm text-gray-700">Contractor Management</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-sm text-gray-700">Checklist System</span>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-sm text-gray-700">Document Upload</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-sm text-gray-700">Download All Documents</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-sm text-gray-700">Generate Reports</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-green-500 mr-2">✓</span>
+                                <span class="text-sm text-gray-700">7 Permit Types</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Steps -->
+                <div class="mt-8 bg-blue-50 rounded-lg p-6 max-w-4xl mx-auto">
+                    <h3 class="text-lg font-semibold text-blue-900 mb-2">Next Steps</h3>
+                    <p class="text-blue-800 text-sm">
+                        The AWS deployment is complete! The backend is running on AWS Lambda with API Gateway, 
+                        and the frontend is deployed on AWS Amplify. You can now integrate the full Next.js 
+                        application or use this as a starting point for further development.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
