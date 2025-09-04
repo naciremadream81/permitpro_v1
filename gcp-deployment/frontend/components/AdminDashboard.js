@@ -31,6 +31,21 @@ export default function AdminDashboard({ onBack }) {
   });
 
   const [users, setUsers] = useState([]);
+  const [contractors, setContractors] = useState([]);
+  const [permitTypes, setPermitTypes] = useState({});
+  const [showContractorModal, setShowContractorModal] = useState(false);
+  const [editingContractor, setEditingContractor] = useState(null);
+  const [contractorForm, setContractorForm] = useState({
+    name: '',
+    license: '',
+    phone: '',
+    email: '',
+    specialties: '',
+    status: 'active'
+  });
+  const [showChecklistModal, setShowChecklistModal] = useState(false);
+  const [selectedPermitType, setSelectedPermitType] = useState('');
+  const [newChecklistItem, setNewChecklistItem] = useState('');
   const [systemSettings, setSystemSettings] = useState({
     maintenanceMode: false,
     allowNewRegistrations: true,
@@ -116,6 +131,85 @@ export default function AdminDashboard({ onBack }) {
       console.error(`Failed to ${action} user:`, error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Contractor Management Functions
+  const handleAddContractor = () => {
+    setEditingContractor(null);
+    setContractorForm({
+      name: '',
+      license: '',
+      phone: '',
+      email: '',
+      specialties: '',
+      status: 'active'
+    });
+    setShowContractorModal(true);
+  };
+
+  const handleEditContractor = (contractor) => {
+    setEditingContractor(contractor);
+    setContractorForm(contractor);
+    setShowContractorModal(true);
+  };
+
+  const handleSaveContractor = async () => {
+    try {
+      if (editingContractor) {
+        // Update existing contractor
+        await apiService.updateContractor(editingContractor.id, contractorForm);
+        const updatedContractors = await apiService.getContractors();
+        setContractors(updatedContractors);
+      } else {
+        // Add new contractor
+        await apiService.createContractor(contractorForm);
+        const updatedContractors = await apiService.getContractors();
+        setContractors(updatedContractors);
+      }
+      setShowContractorModal(false);
+    } catch (error) {
+      console.error('Failed to save contractor:', error);
+      alert('Failed to save contractor. Please try again.');
+    }
+  };
+
+  const handleDeleteContractor = async (contractorId) => {
+    if (window.confirm('Are you sure you want to delete this contractor?')) {
+      try {
+        await apiService.deleteContractor(contractorId);
+        const updatedContractors = await apiService.getContractors();
+        setContractors(updatedContractors);
+      } catch (error) {
+        console.error('Failed to delete contractor:', error);
+        alert('Failed to delete contractor. Please try again.');
+      }
+    }
+  };
+
+  // Permit Type Checklist Management Functions
+  const handleAddChecklistItem = async () => {
+    if (selectedPermitType && newChecklistItem.trim()) {
+      try {
+        await apiService.addChecklistItem(selectedPermitType, newChecklistItem.trim());
+        const updatedPermitTypes = await apiService.getAdminPermitTypes();
+        setPermitTypes(updatedPermitTypes);
+        setNewChecklistItem('');
+      } catch (error) {
+        console.error('Failed to add checklist item:', error);
+        alert('Failed to add checklist item. Please try again.');
+      }
+    }
+  };
+
+  const handleRemoveChecklistItem = async (permitType, itemIndex) => {
+    try {
+      await apiService.removeChecklistItem(permitType, itemIndex);
+      const updatedPermitTypes = await apiService.getAdminPermitTypes();
+      setPermitTypes(updatedPermitTypes);
+    } catch (error) {
+      console.error('Failed to remove checklist item:', error);
+      alert('Failed to remove checklist item. Please try again.');
     }
   };
 
@@ -440,6 +534,128 @@ export default function AdminDashboard({ onBack }) {
     </div>
   );
 
+  // Render Contractors Tab
+  const renderContractors = () => (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-gray-900">Contractor Management</h2>
+        <Button onClick={() => setShowContractorModal(true)} className="bg-blue-600 hover:bg-blue-700 text-white">
+          Add Contractor
+        </Button>
+      </div>
+
+      <Card>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">License</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Specialties</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {contractors.map((contractor) => (
+                  <tr key={contractor.id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {contractor.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {contractor.license}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {contractor.phone}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {contractor.email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {contractor.specialties}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                        contractor.status === 'active' 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {contractor.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleEditContractor(contractor)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleDeleteContractor(contractor.id)}
+                        className="text-red-600 hover:text-red-700"
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  // Render Permit Types Tab
+  const renderPermitTypes = () => (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-gray-900">Permit Type Checklists</h2>
+        <Button onClick={() => setShowChecklistModal(true)} className="bg-blue-600 hover:bg-blue-700 text-white">
+          Add Checklist Item
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {Object.entries(permitTypes).map(([key, permitType]) => (
+          <Card key={key}>
+            <CardHeader>
+              <h3 className="text-lg font-semibold text-gray-900">{permitType.name}</h3>
+              <p className="text-sm text-gray-600">{permitType.description}</p>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                <h4 className="font-medium text-gray-900">Checklist Items ({permitType.checklist.length})</h4>
+                <div className="max-h-60 overflow-y-auto">
+                  {permitType.checklist.map((item, index) => (
+                    <div key={index} className="flex items-start justify-between py-2 border-b border-gray-100 last:border-b-0">
+                      <span className="text-sm text-gray-700 flex-1">{item}</span>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleRemoveChecklistItem(key, index)}
+                        className="text-red-600 hover:text-red-700 ml-2"
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+
   const tabs = [
     { id: 'overview', name: 'Overview', icon: BarChart3 },
     { id: 'users', name: 'Users', icon: Users },
@@ -507,6 +723,8 @@ export default function AdminDashboard({ onBack }) {
           <>
             {activeTab === 'overview' && renderOverview()}
             {activeTab === 'users' && renderUsers()}
+            {activeTab === 'contractors' && renderContractors()}
+            {activeTab === 'permit-types' && renderPermitTypes()}
             {activeTab === 'settings' && renderSettings()}
           </>
         )}
