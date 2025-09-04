@@ -443,6 +443,8 @@ export default function AdminDashboard({ onBack }) {
   const tabs = [
     { id: 'overview', name: 'Overview', icon: BarChart3 },
     { id: 'users', name: 'Users', icon: Users },
+    { id: 'contractors', name: 'Contractors', icon: Users },
+    { id: 'permit-types', name: 'Permit Types', icon: FileText },
     { id: 'settings', name: 'Settings', icon: Settings }
   ];
 

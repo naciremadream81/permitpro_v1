@@ -1,25 +1,33 @@
 {
   "polyfillFiles": [
-    "static/chunks/polyfills.js"
+    "static/chunks/polyfills-42372ed130431b0a.js"
   ],
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-<<<<<<< HEAD
-    "static/development/_buildManifest.js",
-    "static/development/_ssgManifest.js"
-=======
-    "static/10VGipiekeJqavE8taxO2/_buildManifest.js",
-    "static/10VGipiekeJqavE8taxO2/_ssgManifest.js"
->>>>>>> d4af368 (Update build ID to '10VGipiekeJqavE8taxO2' and adjust references in HTML, build manifests, and server responses. Added new build and SSG manifests for deployment, ensuring consistency across static assets and server responses.)
+    "static/HBjH6HfexjY2zpRSNYXXd/_buildManifest.js",
+    "static/HBjH6HfexjY2zpRSNYXXd/_ssgManifest.js"
   ],
   "rootMainFiles": [
-    "static/chunks/webpack.js",
-    "static/chunks/main-app.js"
+    "static/chunks/webpack-28cf375906361cfa.js",
+    "static/chunks/4bd1b696-c023c6e3521b1417.js",
+    "static/chunks/255-aad41205a3563def.js",
+    "static/chunks/main-app-5a979aec035f74fa.js"
   ],
   "rootMainFilesTree": {},
   "pages": {
-    "/_app": []
+    "/_app": [
+      "static/chunks/webpack-28cf375906361cfa.js",
+      "static/chunks/framework-a6e0b7e30f98059a.js",
+      "static/chunks/main-4be4b727dc3c439f.js",
+      "static/chunks/pages/_app-7d307437aca18ad4.js"
+    ],
+    "/_error": [
+      "static/chunks/webpack-28cf375906361cfa.js",
+      "static/chunks/framework-a6e0b7e30f98059a.js",
+      "static/chunks/main-4be4b727dc3c439f.js",
+      "static/chunks/pages/_error-cb2a52f75f2162e2.js"
+    ]
   },
   "ampFirstPages": []
 }
