@@ -372,7 +372,7 @@ app.post('/api/auth/login', async (req, res) => {
 
     if (email === mockUser.email && password === mockUser.password) {
       const token = jwt.sign(
-        { userId: mockUser.id, email: mockUser.email },
+        { userId: mockUser.id, email: mockUser.email, role: mockUser.role },
         JWT_SECRET,
         { expiresIn: '24h' }
       );
