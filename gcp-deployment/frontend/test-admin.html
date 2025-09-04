@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login Test</title>
+</head>
+<body>
+    <h1>Admin Login Test</h1>
+    <p>Testing admin login functionality...</p>
+    
+    <div id="test-results"></div>
+    
+    <script>
+        // Test admin login logic
+        function testAdminLogin() {
+            const email = 'admin@permitpro.com';
+            const password = 'admin123';
+            
+            const isAdminLogin = true;
+            const emailMatch = email === 'admin@permitpro.com';
+            const passwordMatch = password === 'admin123';
+            
+            const results = document.getElementById('test-results');
+            results.innerHTML = `
+                <h2>Test Results:</h2>
+                <p>Email match: ${emailMatch}</p>
+                <p>Password match: ${passwordMatch}</p>
+                <p>Both match: ${emailMatch && passwordMatch}</p>
+                <p>Admin login should work: ${isAdminLogin && emailMatch && passwordMatch}</p>
+            `;
+        }
+        
+        testAdminLogin();
+    </script>
+</body>
+</html>

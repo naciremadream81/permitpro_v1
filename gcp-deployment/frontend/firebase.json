@@ -8,7 +8,7 @@
     ],
     "rewrites": [
       {
-        "source": "!/_next/static/**",
+        "source": "**",
         "destination": "/server/app/index.html"
       }
     ],
