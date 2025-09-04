@@ -5,6 +5,7 @@ import LoginPage from '../components/LoginPage';
 import Dashboard from '../components/Dashboard';
 import PackageDetailView from '../components/PackageDetailView';
 import CreatePackageModal from '../components/CreatePackageModal';
+import AdminDashboard from '../components/AdminDashboard';
 import { apiService } from '../lib/api';
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
   const [packages, setPackages] = useState([]);
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showAdminDashboard, setShowAdminDashboard] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,11 +51,21 @@ export default function App() {
     loadPackages();
   };
 
+  const handleAdminLogin = (userData) => {
+    setUser({ ...userData, role: 'admin' });
+    setShowAdminDashboard(true);
+  };
+
   const handleLogout = () => {
     apiService.logout();
     setUser(null);
     setPackages([]);
     setSelectedPackage(null);
+    setShowAdminDashboard(false);
+  };
+
+  const handleBackFromAdmin = () => {
+    setShowAdminDashboard(false);
   };
 
   const handlePackageCreate = (newPackage) => {
@@ -89,7 +101,11 @@ export default function App() {
   }
 
   if (!user) {
-    return <LoginPage onLogin={handleLogin} />;
+    return <LoginPage onLogin={handleLogin} onAdminLogin={handleAdminLogin} />;
+  }
+
+  if (showAdminDashboard) {
+    return <AdminDashboard onBack={handleBackFromAdmin} />;
   }
 
   if (selectedPackage) {
