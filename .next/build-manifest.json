@@ -5,8 +5,13 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
+<<<<<<< HEAD
     "static/development/_buildManifest.js",
     "static/development/_ssgManifest.js"
+=======
+    "static/10VGipiekeJqavE8taxO2/_buildManifest.js",
+    "static/10VGipiekeJqavE8taxO2/_ssgManifest.js"
+>>>>>>> d4af368 (Update build ID to '10VGipiekeJqavE8taxO2' and adjust references in HTML, build manifests, and server responses. Added new build and SSG manifests for deployment, ensuring consistency across static assets and server responses.)
   ],
   "rootMainFiles": [
     "static/chunks/webpack.js",
