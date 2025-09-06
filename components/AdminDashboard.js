@@ -31,6 +31,25 @@ export default function AdminDashboard({ onBack }) {
   });
 
   const [users, setUsers] = useState([]);
+  const [contractors, setContractors] = useState([]);
+  const [checklistTemplates, setChecklistTemplates] = useState([]);
+  const [showContractorModal, setShowContractorModal] = useState(false);
+  const [showChecklistModal, setShowChecklistModal] = useState(false);
+  const [editingContractor, setEditingContractor] = useState(null);
+  const [editingChecklist, setEditingChecklist] = useState(null);
+  const [contractorForm, setContractorForm] = useState({
+    name: '',
+    license: '',
+    phone: '',
+    email: '',
+    address: '',
+    specialties: ''
+  });
+  const [checklistForm, setChecklistForm] = useState({
+    name: '',
+    permitType: '',
+    items: [{ title: '', description: '', required: true }]
+  });
   const [systemSettings, setSystemSettings] = useState({
     maintenanceMode: false,
     allowNewRegistrations: true,
@@ -81,6 +100,76 @@ export default function AdminDashboard({ onBack }) {
           packagesCount: 0
         }
       ]);
+
+      // Load contractors data
+      setContractors([
+        {
+          id: 1,
+          name: 'ABC Construction',
+          license: 'CGC123456',
+          phone: '(555) 123-4567',
+          email: 'contact@abcconstruction.com',
+          address: '123 Main St, Miami, FL 33101',
+          specialties: 'General Construction, Remodeling',
+          status: 'active',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 2,
+          name: 'XYZ Electrical',
+          license: 'EC789012',
+          phone: '(555) 987-6543',
+          email: 'info@xyzelectrical.com',
+          address: '456 Oak Ave, Miami, FL 33102',
+          specialties: 'Electrical, HVAC',
+          status: 'active',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 3,
+          name: 'PlumbPro Services',
+          license: 'PC345678',
+          phone: '(555) 456-7890',
+          email: 'service@plumbpro.com',
+          address: '789 Pine St, Miami, FL 33103',
+          specialties: 'Plumbing, Water Systems',
+          status: 'active',
+          createdAt: new Date().toISOString()
+        }
+      ]);
+
+      // Load checklist templates
+      setChecklistTemplates([
+        {
+          id: 1,
+          permitType: 'mobile-home',
+          name: 'Mobile Home Installation',
+          items: [
+            { title: 'Site plan approval', description: 'Submit site plan for review', required: true },
+            { title: 'Foundation inspection', description: 'Schedule foundation inspection', required: true },
+            { title: 'Electrical hookup verification', description: 'Verify electrical connections', required: true },
+            { title: 'Plumbing connections check', description: 'Check plumbing connections', required: true },
+            { title: 'Tie-down system inspection', description: 'Inspect tie-down system', required: true },
+            { title: 'Final occupancy inspection', description: 'Final inspection for occupancy', required: true }
+          ],
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 2,
+          permitType: 'modular-home',
+          name: 'Modular Home Installation',
+          items: [
+            { title: 'Foundation permit', description: 'Obtain foundation permit', required: true },
+            { title: 'Modular unit delivery approval', description: 'Approve modular unit delivery', required: true },
+            { title: 'Electrical rough-in inspection', description: 'Electrical rough-in inspection', required: true },
+            { title: 'Plumbing rough-in inspection', description: 'Plumbing rough-in inspection', required: true },
+            { title: 'HVAC installation check', description: 'Check HVAC installation', required: true },
+            { title: 'Final building inspection', description: 'Final building inspection', required: true },
+            { title: 'Certificate of occupancy', description: 'Obtain certificate of occupancy', required: true }
+          ],
+          createdAt: new Date().toISOString()
+        }
+      ]);
     } catch (error) {
       console.error('Failed to load admin data:', error);
     } finally {
@@ -117,6 +206,162 @@ export default function AdminDashboard({ onBack }) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleContractorAction = async (contractorId, action) => {
+    setLoading(true);
+    try {
+      console.log(`Performing ${action} on contractor ${contractorId}`);
+      
+      if (action === 'suspend') {
+        setContractors(prev => prev.map(contractor => 
+          contractor.id === contractorId ? { ...contractor, status: 'suspended' } : contractor
+        ));
+      } else if (action === 'activate') {
+        setContractors(prev => prev.map(contractor => 
+          contractor.id === contractorId ? { ...contractor, status: 'active' } : contractor
+        ));
+      } else if (action === 'delete') {
+        setContractors(prev => prev.filter(contractor => contractor.id !== contractorId));
+      }
+    } catch (error) {
+      console.error(`Failed to ${action} contractor:`, error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChecklistAction = async (templateId, action) => {
+    setLoading(true);
+    try {
+      console.log(`Performing ${action} on checklist template ${templateId}`);
+      
+      if (action === 'delete') {
+        setChecklistTemplates(prev => prev.filter(template => template.id !== templateId));
+      } else if (action === 'edit') {
+        const template = checklistTemplates.find(t => t.id === templateId);
+        setEditingChecklist(template);
+        setChecklistForm({
+          name: template.name,
+          permitType: template.permitType,
+          items: template.items
+        });
+        setShowChecklistModal(true);
+      }
+    } catch (error) {
+      console.error(`Failed to ${action} checklist template:`, error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleContractorSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const newContractor = {
+        id: editingContractor ? editingContractor.id : Date.now(),
+        ...contractorForm,
+        status: 'active',
+        createdAt: editingContractor ? editingContractor.createdAt : new Date().toISOString()
+      };
+
+      if (editingContractor) {
+        setContractors(prev => prev.map(c => c.id === editingContractor.id ? newContractor : c));
+      } else {
+        setContractors(prev => [...prev, newContractor]);
+      }
+
+      setShowContractorModal(false);
+      setEditingContractor(null);
+      setContractorForm({ name: '', license: '', phone: '', email: '', address: '', specialties: '' });
+    } catch (error) {
+      console.error('Failed to save contractor:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChecklistSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const newTemplate = {
+        id: editingChecklist ? editingChecklist.id : Date.now(),
+        ...checklistForm,
+        createdAt: editingChecklist ? editingChecklist.createdAt : new Date().toISOString()
+      };
+
+      if (editingChecklist) {
+        setChecklistTemplates(prev => prev.map(t => t.id === editingChecklist.id ? newTemplate : t));
+      } else {
+        setChecklistTemplates(prev => [...prev, newTemplate]);
+      }
+
+      setShowChecklistModal(false);
+      setEditingChecklist(null);
+      setChecklistForm({ name: '', permitType: '', items: [{ title: '', description: '', required: true }] });
+    } catch (error) {
+      console.error('Failed to save checklist template:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addChecklistItem = () => {
+    setChecklistForm(prev => ({
+      ...prev,
+      items: [...prev.items, { title: '', description: '', required: true }]
+    }));
+  };
+
+  const removeChecklistItem = (index) => {
+    setChecklistForm(prev => ({
+      ...prev,
+      items: prev.items.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateChecklistItem = (index, field, value) => {
+    setChecklistForm(prev => ({
+      ...prev,
+      items: prev.items.map((item, i) => 
+        i === index ? { ...item, [field]: value } : item
+      )
+    }));
+  };
+
+  const openContractorModal = (contractor = null) => {
+    if (contractor) {
+      setEditingContractor(contractor);
+      setContractorForm({
+        name: contractor.name,
+        license: contractor.license,
+        phone: contractor.phone,
+        email: contractor.email,
+        address: contractor.address,
+        specialties: contractor.specialties
+      });
+    } else {
+      setEditingContractor(null);
+      setContractorForm({ name: '', license: '', phone: '', email: '', address: '', specialties: '' });
+    }
+    setShowContractorModal(true);
+  };
+
+  const openChecklistModal = (template = null) => {
+    if (template) {
+      setEditingChecklist(template);
+      setChecklistForm({
+        name: template.name,
+        permitType: template.permitType,
+        items: template.items
+      });
+    } else {
+      setEditingChecklist(null);
+      setChecklistForm({ name: '', permitType: '', items: [{ title: '', description: '', required: true }] });
+    }
+    setShowChecklistModal(true);
   };
 
   const renderOverview = () => (
@@ -334,6 +579,177 @@ export default function AdminDashboard({ onBack }) {
     </div>
   );
 
+  const renderContractors = () => (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-semibold text-gray-900">Contractor Management</h3>
+            <Button 
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+              onClick={() => openContractorModal()}
+            >
+              Add Contractor
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Contractor
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    License
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Contact
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Specialties
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {contractors.map((contractor) => (
+                  <tr key={contractor.id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{contractor.name}</div>
+                        <div className="text-sm text-gray-500">{contractor.address}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{contractor.license}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{contractor.phone}</div>
+                      <div className="text-sm text-gray-500">{contractor.email}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">{contractor.specialties}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <Badge variant={contractor.status === 'active' ? 'success' : 'warning'}>
+                        {contractor.status}
+                      </Badge>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => openContractorModal(contractor)}
+                      >
+                        Edit
+                      </Button>
+                      {contractor.status === 'active' ? (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleContractorAction(contractor.id, 'suspend')}
+                        >
+                          Suspend
+                        </Button>
+                      ) : (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleContractorAction(contractor.id, 'activate')}
+                        >
+                          Activate
+                        </Button>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleContractorAction(contractor.id, 'delete')}
+                        className="text-red-600 hover:text-red-700"
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  const renderChecklists = () => (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-semibold text-gray-900">Checklist Templates</h3>
+            <Button 
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+              onClick={() => openChecklistModal()}
+            >
+              Add Template
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {checklistTemplates.map((template) => (
+              <div key={template.id} className="border border-gray-200 rounded-lg p-4">
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h4 className="text-lg font-medium text-gray-900">{template.name}</h4>
+                    <p className="text-sm text-gray-500">Permit Type: {template.permitType}</p>
+                    <p className="text-sm text-gray-500">
+                      {template.items.length} items • Created: {new Date(template.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div className="flex space-x-2">
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      onClick={() => openChecklistModal(template)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleChecklistAction(template.id, 'delete')}
+                      className="text-red-600 hover:text-red-700"
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  {template.items.map((item, index) => (
+                    <div key={index} className="flex items-center text-sm">
+                      <div className={`w-2 h-2 rounded-full mr-3 ${item.required ? 'bg-red-500' : 'bg-gray-300'}`}></div>
+                      <span className="font-medium">{item.title}</span>
+                      <span className="text-gray-500 ml-2">- {item.description}</span>
+                      {item.required && (
+                        <Badge variant="default" className="ml-2 text-xs">Required</Badge>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
   const renderSettings = () => (
     <div className="space-y-6">
       <Card>
@@ -443,6 +859,8 @@ export default function AdminDashboard({ onBack }) {
   const tabs = [
     { id: 'overview', name: 'Overview', icon: BarChart3 },
     { id: 'users', name: 'Users', icon: Users },
+    { id: 'contractors', name: 'Contractors', icon: Users },
+    { id: 'checklists', name: 'Checklists', icon: FileText },
     { id: 'settings', name: 'Settings', icon: Settings }
   ];
 
@@ -505,10 +923,239 @@ export default function AdminDashboard({ onBack }) {
           <>
             {activeTab === 'overview' && renderOverview()}
             {activeTab === 'users' && renderUsers()}
+            {activeTab === 'contractors' && renderContractors()}
+            {activeTab === 'checklists' && renderChecklists()}
             {activeTab === 'settings' && renderSettings()}
           </>
         )}
       </div>
+
+      {/* Contractor Modal */}
+      {showContractorModal && (
+        <Modal onClose={() => setShowContractorModal(false)}>
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">
+                {editingContractor ? 'Edit Contractor' : 'Add New Contractor'}
+              </h2>
+            </div>
+            <form onSubmit={handleContractorSubmit} className="p-6 space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Company Name *
+                  </label>
+                  <Input
+                    type="text"
+                    value={contractorForm.name}
+                    onChange={(e) => setContractorForm(prev => ({ ...prev, name: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    License Number *
+                  </label>
+                  <Input
+                    type="text"
+                    value={contractorForm.license}
+                    onChange={(e) => setContractorForm(prev => ({ ...prev, license: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone *
+                  </label>
+                  <Input
+                    type="tel"
+                    value={contractorForm.phone}
+                    onChange={(e) => setContractorForm(prev => ({ ...prev, phone: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email *
+                  </label>
+                  <Input
+                    type="email"
+                    value={contractorForm.email}
+                    onChange={(e) => setContractorForm(prev => ({ ...prev, email: e.target.value }))}
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Address
+                </label>
+                <Input
+                  type="text"
+                  value={contractorForm.address}
+                  onChange={(e) => setContractorForm(prev => ({ ...prev, address: e.target.value }))}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Specialties
+                </label>
+                <Input
+                  type="text"
+                  value={contractorForm.specialties}
+                  onChange={(e) => setContractorForm(prev => ({ ...prev, specialties: e.target.value }))}
+                  placeholder="e.g., General Construction, Electrical, Plumbing"
+                />
+              </div>
+              <div className="flex justify-end space-x-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowContractorModal(false)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
+                  {editingContractor ? 'Update Contractor' : 'Add Contractor'}
+                </Button>
+              </div>
+            </form>
+          </div>
+        </Modal>
+      )}
+
+      {/* Checklist Modal */}
+      {showChecklistModal && (
+        <Modal onClose={() => setShowChecklistModal(false)}>
+          <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="px-6 py-4 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">
+                {editingChecklist ? 'Edit Checklist Template' : 'Add New Checklist Template'}
+              </h2>
+            </div>
+            <form onSubmit={handleChecklistSubmit} className="p-6 space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Template Name *
+                  </label>
+                  <Input
+                    type="text"
+                    value={checklistForm.name}
+                    onChange={(e) => setChecklistForm(prev => ({ ...prev, name: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Permit Type *
+                  </label>
+                  <select
+                    value={checklistForm.permitType}
+                    onChange={(e) => setChecklistForm(prev => ({ ...prev, permitType: e.target.value }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                  >
+                    <option value="">Select permit type</option>
+                    <option value="mobile-home">Mobile Home</option>
+                    <option value="modular-home">Modular Home</option>
+                    <option value="shed">Shed</option>
+                    <option value="addition">Home Addition</option>
+                    <option value="hvac">HVAC</option>
+                    <option value="electrical">Electrical</option>
+                    <option value="plumbing">Plumbing</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div>
+                <div className="flex justify-between items-center mb-3">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Checklist Items *
+                  </label>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={addChecklistItem}
+                  >
+                    Add Item
+                  </Button>
+                </div>
+                <div className="space-y-3">
+                  {checklistForm.items.map((item, index) => (
+                    <div key={index} className="border border-gray-200 rounded-lg p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <span className="text-sm font-medium text-gray-700">Item {index + 1}</span>
+                        {checklistForm.items.length > 1 && (
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="outline"
+                            onClick={() => removeChecklistItem(index)}
+                            className="text-red-600 hover:text-red-700"
+                          >
+                            Remove
+                          </Button>
+                        )}
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                            Title *
+                          </label>
+                          <Input
+                            type="text"
+                            value={item.title}
+                            onChange={(e) => updateChecklistItem(index, 'title', e.target.value)}
+                            required
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-600 mb-1">
+                            Required
+                          </label>
+                          <select
+                            value={item.required}
+                            onChange={(e) => updateChecklistItem(index, 'required', e.target.value === 'true')}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="true">Required</option>
+                            <option value="false">Optional</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="mt-2">
+                        <label className="block text-xs font-medium text-gray-600 mb-1">
+                          Description
+                        </label>
+                        <Input
+                          type="text"
+                          value={item.description}
+                          onChange={(e) => updateChecklistItem(index, 'description', e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="flex justify-end space-x-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowChecklistModal(false)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
+                  {editingChecklist ? 'Update Template' : 'Add Template'}
+                </Button>
+              </div>
+            </form>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

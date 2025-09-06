@@ -1,0 +1,15 @@
+Project Console: https://console.firebase.google.com/project/permitpro-463203/overview
+Hosting URL: https://permitpro-463203.web.app
+                                                
+                                                
+ Services to deploy:
+
+descriptor:                  [/home/archie/codebase/permitpro_v1/gcp-deployment/backend/app.yaml]
+source:                      [/home/archie/codebase/permitpro_v1/gcp-deployment/backend]
+target project:              [permitpro-463203]
+target service:              [default]
+target version:              [20250905t023158]
+target url:                  [https://permitpro-463203.uk.r.appspot.com]
+target service account:      [permitpro-463203@appspot.gserviceaccount.com]
+                                               
+                                                

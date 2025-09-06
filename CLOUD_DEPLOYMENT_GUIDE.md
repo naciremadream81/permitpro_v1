@@ -124,9 +124,6 @@ Update your frontend environment variables with the deployed API URLs:
 NEXT_PUBLIC_API_URL=https://your-api-gateway-url.amazonaws.com/dev
 ```
 
-#### **GCP (.env.local):**
-```env
-NEXT_PUBLIC_API_URL=https://your-app-engine-url.appspot.com
 ```
 
 ---
